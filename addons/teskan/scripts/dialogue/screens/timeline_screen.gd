@@ -9,7 +9,6 @@ var change_order = false
 
 #ADDING A NEW TEXT EVENT TO THE CURRENT TIMELINE
 func _on_AddTextEvent_pressed():
-	print("Adding")
 	var new_text_event_preset = ResourceLoader.load("res://addons/teskan/scenes/dialogue/presets/TextEvent.tscn","", true).instance()
 	event_list.add_child(new_text_event_preset)
 	
@@ -36,10 +35,10 @@ func _on_TimelineScreen_visibility_changed():
 				var new_text_event_preset = load("res://addons/teskan/scenes/dialogue/presets/TextEvent.tscn").instance()
 				#CHECK IF THE EVENT HAS A CHARACTER
 				if event.character != 'No Character':
-					new_text_event_preset.get_node("VBoxContainer/HBoxContainer/Character").text = TDData.get_var(event.character).name
+					new_text_event_preset.get_node("MainBody/HBoxContainer/Character").text = TDData.get_var(event.character).name
 					#CHECK IF THE EVENT's CHARACTER HAS A COLOUR
 					if TDData.get_var(event.character).colour is Color:
-						new_text_event_preset.get_node("VBoxContainer/HBoxContainer/CharacterColour").color = TDData.get_var(event.character).colour
+						new_text_event_preset.get_node("MainBody/HBoxContainer/CharacterColour").color = TDData.get_var(event.character).colour
 						
 				event_list.add_child(new_text_event_preset)
 				
