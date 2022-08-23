@@ -59,6 +59,69 @@ static func new_choice_event(event_list,tree):
 	new_choice_event_preset.get_node("EventDivider/Id").text = choice_event_dict.id
 	event_list.add_child(new_choice_event_preset)
 
+
+
+###--------------EVENT PATHS--------------###
+
+static func get_event_path(event):
+	var path = [event.get_node("EventDivider/Id").text]
+	var parent = event
+	#print(get_event_parents_helper(event,parents))
+	while true:
+		if parent.get_parent().name != "EventList":
+			#ACCOUNTING FOR ChildList ==NOT== BEING AN EVENT
+			parent = parent.get_parent().get_parent()
+			path.insert(0,parent.get_node("EventDivider/Id").text)
+		else:
+			break	
+			
+	return path
+
+static func set_event_data(timeline_path,current_event_path,target_event_path,desired_index):	
+	var cloned_event
+	var timeline = get_var(timeline_path)
+	
+	#CLONE AND DELETE THE OLD EVENT
+	var i = 0
+	var parent = timeline.events
+	for event in parent:
+		if event.id == current_event_path[i]:
+			#print(event)
+			i += 1
+			if i < current_event_path.size():
+				parent = event
+			else:
+				cloned_event = event
+				parent.erase(event)
+				
+				store_var(timeline_path,timeline)
+				
+	#INSERT THE CLONE INTO THE PARENTS children[] w/desired pos
+	#resetting vars changed from the loop above
+	timeline = get_var(timeline_path)
+	i = 0
+	parent = timeline.events
+	
+	#taking the final index off the target path so we find the parent 
+	print(target_event_path)
+	target_event_path.remove(target_event_path.size() - 1)
+	print(target_event_path)
+	for event in parent:
+		print("I: ", i)
+		print("Event: ", event)
+		if event.id == target_event_path[i]:
+			i += 1
+			if i < target_event_path.size():
+				parent = event
+			else:
+				print("Else...")
+				event.children.insert(desired_index,cloned_event)
+				store_var(timeline_path,timeline)
+				print(timeline)
+		else:
+			print("FAIL")
+	
+
 ###--------------STORE AND SAVE DATA--------------###
 
 static func store_var(path,variable):

@@ -15,9 +15,10 @@ func _on_AddChoiceEvent_pressed():
 	TDData.new_choice_event(event_list,tree)
 
 func _on_TimelineScreen_visibility_changed():
+
 	if self.visible == true: #&& file2check.file_exists("res://teskan_data/dialogue/timelines/"+item_selected.get_metadata(0)):
 		var timeline_file = TDData.get_var("res://teskan_data/dialogue/timelines/"+tree.get_selected().get_metadata(0))
-
+		print(timeline_file)
 		for child in event_list.get_children():
 			child.queue_free()
 		
