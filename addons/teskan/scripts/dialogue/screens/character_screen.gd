@@ -1,5 +1,5 @@
 tool
-extends TDEvent
+extends Control
 
 onready var tree : Tree = self.get_node("../../MainTree")
 

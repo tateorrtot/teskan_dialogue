@@ -36,26 +36,28 @@ static func new_timeline(tree):
 ###--------------EVENTS--------------###
 	
 static func new_text_event(event_list,tree):
-	var new_text_event_preset = ResourceLoader.load("res://addons/teskan/scenes/dialogue/presets/events/TextEvent.tscn","", true).instance()
-	event_list.add_child(new_text_event_preset)
-	
-	var text_event_dict = {'type' : 'text', 'character' : 'No Character', 'text' : 'No Text'}
+	var text_event_dict = {'type' : 'text', 'character' : 'No Character', 'text' : 'No Text', 'id' : var2str(OS.get_ticks_usec())}
 	var timeline_path = "res://teskan_data/dialogue/timelines/"+tree.get_selected().get_metadata(0)
 	
 	var timeline_file = get_var(timeline_path)
 	timeline_file.events.append(text_event_dict)
 	store_var(timeline_path,timeline_file)
 
-static func new_choice_event(event_list,tree):
-	var new_choice_event_preset = ResourceLoader.load("res://addons/teskan/scenes/dialogue/presets/events/ChoiceEvent.tscn","", true).instance()
-	event_list.add_child(new_choice_event_preset)
+	var new_text_event_preset = ResourceLoader.load("res://addons/teskan/scenes/dialogue/presets/events/TextEvent.tscn","", true).instance()
+	new_text_event_preset.get_node("EventDivider/Id").text = text_event_dict.id
+	event_list.add_child(new_text_event_preset)
 	
-	var choice_event_dict = {'type' : 'choice', 'desc' : 'No Desc', 'children' : []}
+static func new_choice_event(event_list,tree):	
+	var choice_event_dict = {'type' : 'choice', 'desc' : 'No Desc', 'children' : [], 'id' : var2str(OS.get_ticks_usec())}
 	var timeline_path = "res://teskan_data/dialogue/timelines/"+tree.get_selected().get_metadata(0)
 	
 	var timeline_file = get_var(timeline_path)
 	timeline_file.events.append(choice_event_dict)
 	store_var(timeline_path,timeline_file)
+
+	var new_choice_event_preset = ResourceLoader.load("res://addons/teskan/scenes/dialogue/presets/events/ChoiceEvent.tscn","", true).instance()
+	new_choice_event_preset.get_node("EventDivider/Id").text = choice_event_dict.id
+	event_list.add_child(new_choice_event_preset)
 
 ###--------------STORE AND SAVE DATA--------------###
 

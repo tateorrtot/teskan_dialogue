@@ -27,6 +27,8 @@ func _on_TimelineScreen_visibility_changed():
 			#LOAD TEXT EVENTS
 			if event.type == "text":
 				var new_text_event_preset = load("res://addons/teskan/scenes/dialogue/presets/events/TextEvent.tscn").instance()
+				new_text_event_preset.get_node("EventDivider/Id").text = event.id
+				
 				#CHECK IF THE EVENT HAS A CHARACTER
 				if event.character != 'No Character':
 					new_text_event_preset.get_node("MainBody/HBoxContainer/Character").text = TDData.get_var(event.character).name

@@ -16,3 +16,6 @@ anchor_bottom = 0.533
 margin_top = 1.0
 margin_bottom = 1.0
 color = Color( 0.588235, 0.588235, 0.588235, 1 )
+
+[node name="Id" type="Label" parent="."]
+margin_bottom = 14.0
