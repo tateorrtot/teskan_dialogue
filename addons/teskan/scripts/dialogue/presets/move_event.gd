@@ -93,7 +93,7 @@ func move_event(event):
 		var desired_index = event.get_index()
 		var target_event_path = TDData.get_event_path(event)
 		
-		TDData.set_event_data(timeline_path,current_event_path,target_event_path,desired_index)
+		TDData.set_event_path(timeline_path,current_event_path,target_event_path,desired_index)
 
 	#CHANGE PARENT AND ORDER
 	"""	elif timeline_screen.is_dragging == true and change_order == true and self.get_parent().get_parent() != event.get_parent():

@@ -77,24 +77,39 @@ static func get_event_path(event):
 			
 	return path
 
-static func set_event_data(timeline_path,current_event_path,target_event_path,desired_index):	
+static func set_event_path(timeline_path,current_event_path,target_event_path,desired_index):	
 	var cloned_event
 	var timeline = get_var(timeline_path)
 	
 	#CLONE AND DELETE THE OLD EVENT
+func event_path_clone_and_delete():
 	var i = 0
 	var parent = timeline.events
+	print("Current path: ",current_event_path)
 	for event in parent:
+		print(event.id)
+		#print("Parent - ", parent)
+		#print("I: ", i, " - Event.id: ", event.id)
 		if event.id == current_event_path[i]:
-			#print(event)
-			i += 1
-			if i < current_event_path.size():
-				parent = event
-			else:
+			print("===================")
+			print("Correct Event! ",event.id)
+			print("I: ",i)
+			print("Path Size: ",current_event_path.size() - 1)
+			print("===================") 
+			#print("Correct event - I ", i)
+			#print("Correct event - Current ", current_event_path[i])
+			if i == (current_event_path.size() - 1):
+				print("Cloned Event: ",event)
 				cloned_event = event
+				#print("Cloned Event: ",cloned_event.id)
 				parent.erase(event)
-				
+
 				store_var(timeline_path,timeline)
+				break
+			else:
+				print("i += 1")
+				i += 1
+				parent = event.children
 				
 	#INSERT THE CLONE INTO THE PARENTS children[] w/desired pos
 	#resetting vars changed from the loop above
@@ -103,23 +118,35 @@ static func set_event_data(timeline_path,current_event_path,target_event_path,de
 	parent = timeline.events
 	
 	#taking the final index off the target path so we find the parent 
-	print(target_event_path)
 	target_event_path.remove(target_event_path.size() - 1)
-	print(target_event_path)
 	for event in parent:
-		print("I: ", i)
-		print("Event: ", event)
+		#print("I: ", i)
+		#print("Event ID: ", event.id)
+		#CHECK IF THE CURRENT EVENT IS CORRECT
 		if event.id == target_event_path[i]:
-			i += 1
-			if i < target_event_path.size():
-				parent = event
-			else:
-				print("Else...")
-				event.children.insert(desired_index,cloned_event)
+			#print("Found it! ",event.id)
+			#IF WE FOUND THE END OF THE PATH MOVE AND END THE LOOP
+			#print("I ",i)
+			#print("Target Path Size: ",target_event_path.size())
+			if i == (target_event_path.size() - 1):
+				
+				#print(current_event_path)
+				#print(target_event_path)
+				#print("Desired Index, ", desired_index)
+				if parent == timeline.events:
+					event.children.insert(desired_index,cloned_event)
+				else:
+					parent.insert(desired_index,cloned_event)
 				store_var(timeline_path,timeline)
 				print(timeline)
-		else:
-			print("FAIL")
+				break
+			#IF WE'RE NOT DONE MOVE THE I TO SEARCH FOR THE NEXT EVENT
+			else:
+				i += 1
+				parent = event.children
+			
+	#	else:
+	#		print("FAIL")
 	
 
 ###--------------STORE AND SAVE DATA--------------###
