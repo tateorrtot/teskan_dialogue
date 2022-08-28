@@ -78,13 +78,21 @@ static func get_event_path(event):
 	return path
 
 static func set_event_path(timeline_path,current_event_path,target_event_path,desired_index):	
-	var cloned_event
 	var timeline = get_var(timeline_path)
+	#var parent = timeline.events
+	
+	var cloned_event = event_path_clone_and_delete(timeline_path,current_event_path,timeline.events)
+	
+	print(cloned_event)
+	
+	event_path_insert(timeline_path,target_event_path,timeline.events,desired_index,cloned_event)
 	
 	#CLONE AND DELETE THE OLD EVENT
-func event_path_clone_and_delete():
+static func event_path_clone_and_delete(timeline_path,current_event_path,parent):
 	var i = 0
-	var parent = timeline.events
+	var cloned_event
+	var timeline = timeline_path
+	#var parent = timeline.events
 	print("Current path: ",current_event_path)
 	for event in parent:
 		print(event.id)
@@ -110,12 +118,17 @@ func event_path_clone_and_delete():
 				print("i += 1")
 				i += 1
 				parent = event.children
+				cloned_event = event_path_clone_and_delete(timeline_path,current_event_path,parent)
 				
+				
+	return cloned_event
+
+static func event_path_insert(timeline_path,target_event_path,parent,desired_index,cloned_event):
 	#INSERT THE CLONE INTO THE PARENTS children[] w/desired pos
 	#resetting vars changed from the loop above
-	timeline = get_var(timeline_path)
-	i = 0
-	parent = timeline.events
+	var timeline = get_var(timeline_path)
+	var i = 0
+	#var parent = timeline.events
 	
 	#taking the final index off the target path so we find the parent 
 	target_event_path.remove(target_event_path.size() - 1)
