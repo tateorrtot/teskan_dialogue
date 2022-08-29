@@ -84,16 +84,16 @@ func move_event(event):
 		#print("Change Parent")
 		#for parent in self.get_parent():
 		#TDData.get_event_parents(event)
-		var current_event_path = TDData.get_event_path(event)
+		#var current_event_path = TDData.get_event_path(event)
 		
 		var new_parent_child_list = self.get_parent().get_node("ChildrenList")
 		event.get_parent().remove_child(event)
 		new_parent_child_list.add_child(event)
 		
-		var desired_index = event.get_index()
-		var target_event_path = TDData.get_event_path(event)
+		#var desired_index = event.get_index()
+		#var target_event_path = TDData.get_event_path(event)
 		
-		TDData.set_event_path(timeline_path,current_event_path,target_event_path,desired_index)
+		#TDData.set_event_path(timeline_path,current_event_path,target_event_path,desired_index)
 
 	#CHANGE PARENT AND ORDER
 	"""	elif timeline_screen.is_dragging == true and change_order == true and self.get_parent().get_parent() != event.get_parent():

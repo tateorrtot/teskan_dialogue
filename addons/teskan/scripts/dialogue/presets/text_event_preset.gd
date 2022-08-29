@@ -23,7 +23,7 @@ func _on_SelectCharacter_pressed():
 
 	
 #WHEN THE USER SELECTS A CHARACTER IN THE CHARACTER POP UP MENU, 
-#LOAD CHARACTER INTO THE TimelinePath
+#LOAD CHARACTER INTO THE EVENT
 func _on_PopupMenu_index_pressed(index):
 	var characters_in_tree = tree.get_root().get_children()
 	var current_tree_item_character = characters_in_tree.get_children()
@@ -35,11 +35,11 @@ func _on_PopupMenu_index_pressed(index):
 		if current_tree_item_character.get_text(0) == characters[index].name:
 			#Save the character that was selected into the text event, which is in the timeline's file
 			var character_file = TDData.get_var("res://teskan_data/dialogue/characters/"+current_tree_item_character.get_metadata(0))
-			var timeline_file = TDData.get_var("res://teskan_data/dialogue/timelines/"+item_selected.get_metadata(0))
+			#var timeline_file = TDData.get_var("res://teskan_data/dialogue/timelines/"+item_selected.get_metadata(0))
 
-			timeline_file.events[self.get_index()].character = characters[index].path
+			#timeline_file.events[self.get_index()].character = characters[index].path
 			
-			TDData.store_var("res://teskan_data/dialogue/timelines/"+item_selected.get_metadata(0), timeline_file)
+			#TDData.store_var("res://teskan_data/dialogue/timelines/"+item_selected.get_metadata(0), timeline_file)
 			
 			$MainBody/HBoxContainer/Character.text = character_file.name
 			$MainBody/HBoxContainer/CharacterColour.color = character_file.colour

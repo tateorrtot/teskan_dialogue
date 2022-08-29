@@ -33,13 +33,13 @@ resizable = true
 mode = 0
 filters = PoolStringArray( "*.tres", "*.res" )
 
-[node name="EventName" type="LineEdit" parent="."]
+[node name="Type" type="LineEdit" parent="."]
 margin_left = 38.0
 margin_top = 32.0
 margin_right = 138.0
 margin_bottom = 56.0
 rect_min_size = Vector2( 100, 0 )
-text = "Text Event"
+text = "Text"
 editable = false
 selecting_enabled = false
 

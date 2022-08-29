@@ -1,14 +1,15 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://addons/teskan/scenes/dialogue/presets/events/EventDivider.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/teskan/scenes/dialogue/presets/MoveEvent.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/teskan/scripts/dialogue/presets/choice_event.gd" type="Script" id=3]
+[ext_resource path="res://addons/teskan/scenes/dialogue/presets/events/TextEvent.tscn" type="PackedScene" id=4]
 
 [node name="ChoiceEvent" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 0.183
 margin_bottom = 0.199959
-rect_min_size = Vector2( 0, 110 )
+rect_min_size = Vector2( 0, 265 )
 script = ExtResource( 3 )
 
 [node name="EventDivider" parent="." instance=ExtResource( 1 )]
@@ -19,13 +20,13 @@ margin_bottom = -19.0
 
 [node name="MoveEvent" parent="." instance=ExtResource( 2 )]
 
-[node name="EventName" type="LineEdit" parent="."]
+[node name="Type" type="LineEdit" parent="."]
 margin_left = 38.0
 margin_top = 32.0
 margin_right = 138.0
 margin_bottom = 56.0
 rect_min_size = Vector2( 100, 0 )
-text = "Choice Event"
+text = "Choice"
 editable = false
 selecting_enabled = false
 
@@ -71,6 +72,12 @@ margin_top = 111.0
 margin_right = 1024.0
 margin_bottom = 112.0
 size_flags_vertical = 3
+
+[node name="TextEvent" parent="ChildrenList" instance=ExtResource( 4 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 1004.0
+margin_bottom = 150.0
 
 [node name="Timer" type="Timer" parent="."]
 

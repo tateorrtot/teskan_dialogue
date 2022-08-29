@@ -24,7 +24,7 @@ rect_min_size = Vector2( 0, 600 )
 
 [node name="EventList" type="VBoxContainer" parent="HSplitContainer/LeftSide"]
 margin_right = 800.0
-margin_bottom = 264.0
+margin_bottom = 419.0
 size_flags_horizontal = 3
 
 [node name="TextEvent" parent="HSplitContainer/LeftSide/EventList" instance=ExtResource( 2 )]
@@ -39,7 +39,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 154.0
 margin_right = 800.0
-margin_bottom = 264.0
+margin_bottom = 419.0
 
 [node name="RightSide" type="ScrollContainer" parent="HSplitContainer"]
 margin_left = 812.0
