@@ -51,6 +51,12 @@ margin_right = 203.0
 margin_bottom = 44.0
 text = "Add Choice Event"
 
+[node name="AddIfEvent" type="Button" parent="HSplitContainer/RightSide/Control/AddEvents"]
+margin_top = 48.0
+margin_right = 203.0
+margin_bottom = 68.0
+text = "Add If Event"
+
 [node name="VSeparator" type="VSeparator" parent="HSplitContainer/RightSide/Control"]
 margin_left = -4.0
 margin_top = -1.0
@@ -60,3 +66,4 @@ margin_bottom = 599.0
 [connection signal="visibility_changed" from="." to="." method="_on_TimelineScreen_visibility_changed"]
 [connection signal="pressed" from="HSplitContainer/RightSide/Control/AddEvents/AddTextEvent" to="." method="_on_AddTextEvent_pressed"]
 [connection signal="pressed" from="HSplitContainer/RightSide/Control/AddEvents/AddChoiceEvent" to="." method="_on_AddChoiceEvent_pressed"]
+[connection signal="pressed" from="HSplitContainer/RightSide/Control/AddEvents/AddIfEvent" to="." method="_on_AddIfEvent_pressed"]

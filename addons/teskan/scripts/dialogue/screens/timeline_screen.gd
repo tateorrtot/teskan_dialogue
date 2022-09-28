@@ -9,13 +9,22 @@ var change_order = false
 
 var last_selected_timeline_path
 
-#ADDING A NEW TEXT EVENT TO THE CURRENT TIMELINE
+###--------------CREATE EVENTS--------------###
 func _on_AddTextEvent_pressed():
-	TDData.new_text_event(event_list,tree)
+	var new_text_event_preset = ResourceLoader.load("res://addons/teskan/scenes/dialogue/presets/events/TextEvent.tscn","", true).instance()
+	new_text_event_preset.get_node("EventDivider/Id").text = var2str(OS.get_ticks_usec())
+	event_list.add_child(new_text_event_preset)
 	
 func _on_AddChoiceEvent_pressed():
-	TDData.new_choice_event(event_list,tree)
-
+	var new_choice_event_preset = ResourceLoader.load("res://addons/teskan/scenes/dialogue/presets/events/ChoiceEvent.tscn","", true).instance()
+	new_choice_event_preset.get_node("EventDivider/Id").text = var2str(OS.get_ticks_usec())
+	event_list.add_child(new_choice_event_preset)
+	
+func _on_AddIfEvent_pressed():
+	var new_if_event_preset = ResourceLoader.load("res://addons/teskan/scenes/dialogue/presets/events/IfEvent.tscn","", true).instance()
+	new_if_event_preset.get_node("EventDivider/Id").text = var2str(OS.get_ticks_usec())
+	event_list.add_child(new_if_event_preset)
+	
 func _on_TimelineScreen_visibility_changed():
 	#print(TDData.get_var("res://teskan_data/dialogue/timelines/"+tree.get_selected().get_metadata(0)))
 	if self.visible == true:
@@ -36,31 +45,32 @@ func load_timeline():
 	$LoadDelay.start(0.1)
 	yield($LoadDelay,"timeout")
 	
+	TDData.play_timeline(timeline)
+	
 	load_events_loop(timeline,timeline.events,[])
 
 func load_events_loop(timeline,parent,event_path):
-	
-	#print("New load loop started! ",parent)
 	#LOOP THROUGH ALL THE EVENTS IN THE SELECTED TIMELINE TO LOAD THEM
-	#var index = 0
 	
 	for event in parent:
 		#LOAD TEXT EVENTS
-		#print("parent ", parent)
-		#print("event ",event)
 		#text events
 		if event.type == "text":
 			var new_ui_event = load("res://addons/teskan/scenes/dialogue/presets/events/TextEvent.tscn").instance()
 			set_ui_event_id(event,new_ui_event)
 			
 			#CHECK IF THE EVENT HAS A CHARACTER
-			if event.character != 'No Character':
-				new_ui_event.get_node("MainBody/HBoxContainer/Character").text = TDData.get_var(event.character).name
+			if event.character_path != null:
+				new_ui_event.get_node('%CharacterName').text = TDData.get_var(event.character_path).name
 				#CHECK IF THE EVENT's CHARACTER HAS A COLOUR
-				if TDData.get_var(event.character).colour is Color:
-					new_ui_event.get_node("MainBody/HBoxContainer/CharacterColour").color = TDData.get_var(event.character).colour
+				if TDData.get_var(event.character_path).colour is Color:
+					new_ui_event.get_node('%CharacterColour').color = TDData.get_var(event.character_path).colour
+					
+				new_ui_event.character_path = event.character_path
+					
+			if event.text != null:
+				new_ui_event.get_node('%Text').text = event.text
 			
-			#print(event_path)
 			
 			add_ui_event_child(new_ui_event,event_path,event_list,0)
 		
@@ -79,7 +89,7 @@ func load_events_loop(timeline,parent,event_path):
 func check_for_children_while_loading(timeline,event,event_path):
 	if event.has('children'):
 		if event.children != []:
-			print(event)
+			#print(event)
 			#ADD THIS EVENT TO THE PATH
 			var new_event_path = event_path.duplicate()
 			
@@ -123,34 +133,22 @@ func save_timeline():
 	print(TDData.get_var(last_selected_timeline_path))
 
 func save_events_loop(timeline,ui_parent,event_path):
-	#print(event_path)
-	#var index = 0
-	#print("new save loop started...")
 	#LOOP THROUGH ALL THE EVENTS IN THE SELECTED TIMELINE TO LOAD THEM
-	#print(ui_parent)
 	for ui_event in ui_parent:
-		#print(ui_parent)
-		#LOAD TEXT EVENTS
-		#print("=================")
-		#print("Path: ",event_path)
-		#print("Parent: ",ui_parent)
-		#print("Event: ",ui_event)
-		#text events
+		#TEXT
 		if ui_event.get_node("Type").text == "Text":
-			#if event_path == []:
-			#	print("Adding a core child!")
-			#print("PATH ",event_path)
-			#print("Text")
-			#print("event_path ",event_path)
-			var new_timeline_events = add_event_child({'type' : 'text', 'character' : 'No Character', 'text' : 'No Text', 'id' : get_event_id(ui_event)},event_path,timeline.events,0)
-			#print("new_timeline_events ",new_timeline_events)
-			#add_event_child("text",event_path,timeline.events,0,ui_event)
-			#print("New event: ",new_event)
+			var new_event = {'type' : 'text', 'character_path' : null, 'character' : null, 'text' : null, 'id' : get_event_id(ui_event)}
+			if ui_event.get_node('%CharacterName').text != '':
+				new_event.character_path = ui_event.character_path
+			if ui_event.get_node('%Text').text != '':
+				new_event.text = ui_event.get_node('%Text').text
+			
+			add_event_child(new_event,event_path,timeline.events,0)
+			
 		
 		#choice events
 		if ui_event.get_node("Type").text == "Choice":
-			#print("Choice")
-			var new_timeline_events = add_event_child({'type' : 'choice', 'desc' : 'No Desc', 'children' : [], 'id' : get_event_id(ui_event)},event_path,timeline.events,0)
+			add_event_child({'type' : 'choice', 'desc' : 'No Desc', 'children' : [], 'id' : get_event_id(ui_event)},event_path,timeline.events,0)
 			#print("new events! ",new_timeline_events)
 			check_for_children_while_saving(timeline,ui_event,event_path)
 
@@ -189,8 +187,6 @@ func add_event_child(dict,event_path,parent,index):
 		#print("--=========--")
 		#print("adding a core child")
 		parent.append(dict)
-	#print("PARENT: ",parent)
-	#return parent
 
 func get_event_id(ui_event):
 	var id = ui_event.get_node("EventDivider/Id").text

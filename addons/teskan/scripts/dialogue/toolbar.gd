@@ -34,7 +34,9 @@ func _on_NewTheme_pressed():
 	
 	
 func _on_NewTimeline_pressed():
-	tddata.new_timeline(tree)
+	#tddata.new_timeline(tree)
+	var new_timeline = Timeline.new(tree)
+	print(new_timeline.id)
 
 func _on_NewVariable_pressed():
 	var new_tree_child = tree.create_item(variables_holder)

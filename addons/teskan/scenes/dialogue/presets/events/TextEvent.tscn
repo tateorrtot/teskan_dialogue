@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://addons/teskan/scenes/dialogue/presets/events/EventDivider.tscn" type="PackedScene" id=1]
-[ext_resource path="res://addons/teskan/scenes/dialogue/presets/MoveEvent.tscn" type="PackedScene" id=2]
-[ext_resource path="res://addons/teskan/scripts/dialogue/presets/text_event_preset.gd" type="Script" id=3]
+[ext_resource path="res://addons/teskan/scenes/dialogue/presets/events/MoveEvent.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/teskan/scripts/dialogue/presets/text_event.gd" type="Script" id=3]
 
 [node name="TextEvent" type="Control"]
 anchor_right = 1.0
@@ -13,6 +13,7 @@ script = ExtResource( 3 )
 
 [node name="EventDivider" parent="." instance=ExtResource( 1 )]
 anchor_bottom = 0.2
+size_flags_horizontal = 1
 
 [node name="MoveEvent" parent="." instance=ExtResource( 2 )]
 
@@ -49,7 +50,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 0.0499954
 rect_min_size = Vector2( 50, 50 )
-size_flags_horizontal = 3
 color = Color( 0, 0.196078, 0.196078, 1 )
 
 [node name="MainBody" type="VBoxContainer" parent="."]
@@ -57,7 +57,6 @@ anchor_top = 0.373
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 0.0499954
-size_flags_horizontal = 3
 __meta__ = {
 "_edit_group_": true
 }
@@ -74,12 +73,14 @@ rect_min_size = Vector2( 100, 0 )
 text = "Character:"
 
 [node name="CharacterColour" type="ColorRect" parent="MainBody/HBoxContainer"]
+unique_name_in_owner = true
 margin_left = 104.0
 margin_right = 129.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 25, 20 )
 
-[node name="Character" type="LineEdit" parent="MainBody/HBoxContainer"]
+[node name="CharacterName" type="LineEdit" parent="MainBody/HBoxContainer"]
+unique_name_in_owner = true
 margin_left = 133.0
 margin_right = 996.0
 margin_bottom = 24.0
@@ -104,19 +105,12 @@ margin_bottom = 37.0
 rect_min_size = Vector2( 100, 0 )
 text = "Text:"
 
-[node name="TextEdit" type="TextEdit" parent="MainBody/HBoxContainer2"]
+[node name="Text" type="TextEdit" parent="MainBody/HBoxContainer2"]
+unique_name_in_owner = true
 margin_left = 104.0
 margin_right = 1024.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 0, 60 )
-size_flags_horizontal = 3
-
-[node name="LineEdit" type="LineEdit" parent="MainBody/HBoxContainer2"]
-visible = false
-margin_left = 566.0
-margin_right = 1024.0
-margin_bottom = 70.0
-rect_min_size = Vector2( 0, 70 )
 size_flags_horizontal = 3
 
 [connection signal="index_pressed" from="PopupMenu" to="." method="_on_PopupMenu_index_pressed"]
@@ -124,5 +118,3 @@ size_flags_horizontal = 3
 [connection signal="mouse_exited" from="MainBody" to="." method="_on_MainBody_mouse_exited"]
 [connection signal="pressed" from="MainBody/HBoxContainer/SelectCharacter" to="." method="_on_SelectCharacter_pressed"]
 [connection signal="toggled" from="MainBody/HBoxContainer/SelectCharacter" to="." method="_on_SelectCharacter_toggled"]
-[connection signal="text_changed" from="MainBody/HBoxContainer2/TextEdit" to="." method="_on_TextEdit_text_changed"]
-[connection signal="text_entered" from="MainBody/HBoxContainer2/LineEdit" to="." method="_on_LineEdit_text_entered"]
