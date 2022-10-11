@@ -56,36 +56,33 @@ func _on_MainBody_mouse_exited():
 func move_event(event):
 	#event is the event we're trying to move
 	#self is the target of where we're moving the event 
-	#print("...")
 	wait_after_drag.start(0.0001)
 	yield(wait_after_drag,"timeout")
 	
-	var timeline_path = "res://teskan_data/dialogue/timelines/"+tree.get_selected().get_metadata(0)
+	#var timeline_path = "res://teskan_data/dialogue/timelines/"+tree.get_selected().get_metadata(0)
 	#var timeline_file = TDData.get_var("res://teskan_data/dialogue/timelines/"+tree.get_selected().get_metadata(0))
-	var original_pos = event.get_index()
-	var target_pos = self.get_parent().get_index()
+	var original_index = event.get_index()
+	var target_index = self.get_parent().get_index()
 	#CHANGE ORDER NOT PARENT
-	"""if timeline_screen.is_dragging == true and change_order == true and self.get_parent().get_parent() == event.get_parent():
-		#CHANGE ORDER
-		if target_pos < original_pos:
-			timeline_file.events.insert(target_pos,timeline_file.events[original_pos])
-			timeline_file.events.remove(original_pos + 1)
-		else:
-			timeline_file.events.insert(target_pos + 1,timeline_file.events[original_pos])
-			timeline_file.events.remove(original_pos)
+	if timeline_screen.is_dragging == true and change_order == true and self.get_parent().get_parent() == event.get_parent():
+		print("CHANGE ORDER")
+		event.get_parent().move_child(event,target_index)
+		timeline_screen.is_dragging = false
+		#if target_index < original_index:
+			#timeline_file.events.insert(target_index,timeline_file.events[original_index])
+			#timeline_file.events.remove(original_index + 1)
+		#else:
+			#timeline_file.events.insert(target_index + 1,timeline_file.events[original_index])
+			#timeline_file.events.remove(original_index)
 			
-		TDData.store_var("res://teskan_data/dialogue/timelines/"+tree.get_selected().get_metadata(0),timeline_file)
-	
-		events_list.move_child(event,target_pos)
-		timeline_screen.is_dragging = false	"""
+		#TDData.store_var("res://teskan_data/dialogue/timelines/"+tree.get_selected().get_metadata(0),timeline_file)
 		
 	#FORCE CHANGE PARENT 
 	if timeline_screen.is_dragging == true and force_change_event_parent == true and self.get_parent().has_node("ChildrenList"): #and self.get_parent().get_parent() == event.get_parent():
-		#print("Change Parent")
+		print("Change Parent")
 		#for parent in self.get_parent():
 		#TDData.get_event_parents(event)
 		#var current_event_path = TDData.get_event_path(event)
-		
 		var new_parent_child_list = self.get_parent().get_node("ChildrenList")
 		event.get_parent().remove_child(event)
 		new_parent_child_list.add_child(event)
@@ -96,8 +93,21 @@ func move_event(event):
 		#TDData.set_event_path(timeline_path,current_event_path,target_event_path,desired_index)
 
 	#CHANGE PARENT AND ORDER
-	"""	elif timeline_screen.is_dragging == true and change_order == true and self.get_parent().get_parent() != event.get_parent():
+	elif timeline_screen.is_dragging == true and change_order == true and self.get_parent().get_parent() != event.get_parent():
 		print("Change parent AND order")
+		var new_parent_child_list
+		
+		if self.get_parent().get_parent().get_parent().has_node("ChildrenList"):
+			new_parent_child_list = self.get_parent().get_parent().get_parent().get_node("ChildrenList")
+		else:
+			new_parent_child_list = events_list
+			
+		event.get_parent().remove_child(event)
+		new_parent_child_list.add_child(event)
+		
+		event.get_parent().move_child(event,target_index)
+		
+		timeline_screen.is_dragging = false
 		#print(self.get_parent().get_node("EventDivider/Id").text)	"""
 
 func change_parent(event):

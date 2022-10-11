@@ -29,12 +29,12 @@ anchor_bottom = 1.0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer"]
 margin_right = 512.0
-margin_bottom = 600.0
+margin_bottom = 1080.0
 rect_min_size = Vector2( 512, 0 )
 
 [node name="Pickers" type="VBoxContainer" parent="HSplitContainer/ScrollContainer"]
 margin_right = 512.0
-margin_bottom = 182.0
+margin_bottom = 210.0
 size_flags_horizontal = 3
 
 [node name="NameColour" type="HBoxContainer" parent="HSplitContainer/ScrollContainer/Pickers"]
@@ -55,7 +55,7 @@ margin_right = 164.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 30, 0 )
 
-[node name="NamePicker" type="LineEdit" parent="HSplitContainer/ScrollContainer/Pickers/NameColour"]
+[node name="Name" type="LineEdit" parent="HSplitContainer/ScrollContainer/Pickers/NameColour"]
 margin_left = 168.0
 margin_right = 512.0
 margin_bottom = 24.0
@@ -75,7 +75,7 @@ rect_min_size = Vector2( 130, 0 )
 rect_pivot_offset = Vector2( -268, -5 )
 text = "Faction:"
 
-[node name="FactionPicker" type="LineEdit" parent="HSplitContainer/ScrollContainer/Pickers/Faction"]
+[node name="Faction" type="LineEdit" parent="HSplitContainer/ScrollContainer/Pickers/Faction"]
 margin_left = 134.0
 margin_right = 512.0
 margin_bottom = 24.0
@@ -95,16 +95,35 @@ rect_min_size = Vector2( 130, 0 )
 rect_pivot_offset = Vector2( -268, -5 )
 text = "Voice:"
 
-[node name="VoicePicker" type="Button" parent="HSplitContainer/ScrollContainer/Pickers/Voice"]
+[node name="Voice" type="Button" parent="HSplitContainer/ScrollContainer/Pickers/Voice"]
 margin_left = 134.0
 margin_right = 212.0
 margin_bottom = 20.0
 text = "Select File"
 
-[node name="VoiceRange" type="HBoxContainer" parent="HSplitContainer/ScrollContainer/Pickers"]
+[node name="VoiceSpeed" type="HBoxContainer" parent="HSplitContainer/ScrollContainer/Pickers"]
 margin_top = 80.0
 margin_right = 512.0
 margin_bottom = 104.0
+
+[node name="Label" type="Label" parent="HSplitContainer/ScrollContainer/Pickers/VoiceSpeed"]
+margin_top = 5.0
+margin_right = 130.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 130, 0 )
+rect_pivot_offset = Vector2( -268, -5 )
+text = "Voice Speed:"
+
+[node name="VoiceSpeed" type="LineEdit" parent="HSplitContainer/ScrollContainer/Pickers/VoiceSpeed"]
+margin_left = 134.0
+margin_right = 192.0
+margin_bottom = 24.0
+text = "1"
+
+[node name="VoiceRange" type="HBoxContainer" parent="HSplitContainer/ScrollContainer/Pickers"]
+margin_top = 108.0
+margin_right = 512.0
+margin_bottom = 132.0
 
 [node name="Label" type="Label" parent="HSplitContainer/ScrollContainer/Pickers/VoiceRange"]
 margin_top = 5.0
@@ -127,22 +146,22 @@ margin_bottom = 24.0
 text = "1.3"
 
 [node name="HSeparator" type="HSeparator" parent="HSplitContainer/ScrollContainer/Pickers"]
-margin_top = 108.0
+margin_top = 136.0
 margin_right = 512.0
-margin_bottom = 112.0
+margin_bottom = 140.0
 
 [node name="PortraitsLabel" type="Label" parent="HSplitContainer/ScrollContainer/Pickers"]
-margin_top = 116.0
+margin_top = 144.0
 margin_right = 512.0
-margin_bottom = 130.0
+margin_bottom = 158.0
 rect_min_size = Vector2( 130, 0 )
 rect_pivot_offset = Vector2( -268, -5 )
 text = "Portraits"
 
 [node name="PortraitsSubtext" type="HBoxContainer" parent="HSplitContainer/ScrollContainer/Pickers"]
-margin_top = 134.0
+margin_top = 162.0
 margin_right = 512.0
-margin_bottom = 154.0
+margin_bottom = 182.0
 
 [node name="Name" type="Label" parent="HSplitContainer/ScrollContainer/Pickers/PortraitsSubtext"]
 margin_top = 3.0
@@ -169,17 +188,17 @@ margin_bottom = 20.0
 text = "New Portrait"
 
 [node name="PortraitList" type="VBoxContainer" parent="HSplitContainer/ScrollContainer/Pickers"]
-margin_top = 158.0
+margin_top = 186.0
 margin_right = 512.0
-margin_bottom = 182.0
+margin_bottom = 210.0
 size_flags_horizontal = 3
 
 [node name="PortraitEntry" parent="HSplitContainer/ScrollContainer/Pickers/PortraitList" instance=ExtResource( 3 )]
 
 [node name="Control" type="Control" parent="HSplitContainer"]
 margin_left = 524.0
-margin_right = 1024.0
-margin_bottom = 600.0
+margin_right = 1920.0
+margin_bottom = 1080.0
 
 [node name="PortraitPreview" type="TextureRect" parent="HSplitContainer/Control"]
 anchor_right = 1.0
@@ -191,10 +210,11 @@ stretch_mode = 5
 [connection signal="visibility_changed" from="." to="." method="_on_CharacterScreen_visibility_changed"]
 [connection signal="file_selected" from="VoicePickerMenu" to="." method="_on_VoicePickerMenu_file_selected"]
 [connection signal="color_changed" from="HSplitContainer/ScrollContainer/Pickers/NameColour/NameColourChanger" to="." method="_on_NameColorChanger_color_changed"]
-[connection signal="text_entered" from="HSplitContainer/ScrollContainer/Pickers/NameColour/NamePicker" to="." method="_on_NamePicker_text_entered"]
-[connection signal="text_entered" from="HSplitContainer/ScrollContainer/Pickers/Faction/FactionPicker" to="." method="_on_FactionPicker_text_entered"]
-[connection signal="pressed" from="HSplitContainer/ScrollContainer/Pickers/Voice/VoicePicker" to="." method="_on_VoicePicker_pressed"]
-[connection signal="text_entered" from="HSplitContainer/ScrollContainer/Pickers/VoiceRange/VoicePitchMin" to="." method="_on_VoicePitchMin_text_entered"]
-[connection signal="text_entered" from="HSplitContainer/ScrollContainer/Pickers/VoiceRange/VoicePitchMax" to="." method="_on_VoicePitchMax_text_entered"]
+[connection signal="text_changed" from="HSplitContainer/ScrollContainer/Pickers/NameColour/Name" to="." method="_on_NamePicker_text_entered"]
+[connection signal="text_changed" from="HSplitContainer/ScrollContainer/Pickers/Faction/Faction" to="." method="_on_FactionPicker_text_entered"]
+[connection signal="pressed" from="HSplitContainer/ScrollContainer/Pickers/Voice/Voice" to="." method="_on_VoicePicker_pressed"]
+[connection signal="text_changed" from="HSplitContainer/ScrollContainer/Pickers/VoiceSpeed/VoiceSpeed" to="." method="_on_VoiceSpeed_text_changed"]
+[connection signal="text_changed" from="HSplitContainer/ScrollContainer/Pickers/VoiceRange/VoicePitchMin" to="." method="_on_VoicePitchMin_text_entered"]
+[connection signal="text_changed" from="HSplitContainer/ScrollContainer/Pickers/VoiceRange/VoicePitchMax" to="." method="_on_VoicePitchMax_text_entered"]
 [connection signal="pressed" from="HSplitContainer/ScrollContainer/Pickers/PortraitsSubtext/NewPortraitEntry" to="." method="_on_NewPortraitEntry_pressed"]
 [connection signal="selected" from="HSplitContainer/ScrollContainer/Pickers/PortraitList/PortraitEntry" to="." method="_on_PortraitEntry_selected"]

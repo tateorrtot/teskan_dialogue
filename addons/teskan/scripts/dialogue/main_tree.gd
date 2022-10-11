@@ -71,6 +71,7 @@ func _ready():
 #ADD A NEW TREE ITEM	
 func add_tree_item(tree_holder,metadata,type : String):
 	var loaded_file = tddata.get_var("res://teskan_data/dialogue/"+type+"/"+metadata)
+	#print(load(loaded_file))
 	
 	var new_tree_child = tree.create_item(tree_holder)
 	new_tree_child.set_icon_modulate(0,loaded_file.colour)

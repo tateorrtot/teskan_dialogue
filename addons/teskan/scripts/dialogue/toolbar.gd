@@ -11,8 +11,6 @@ onready var themes_holder = root.get_children().get_next()
 onready var timelines_holder = root.get_children().get_next().get_next()
 onready var variables_holder = root.get_children().get_next().get_next().get_next()
 
-var tddata = TDData.new()
-
 #onready var timestamp = OS.get_ticks_usec()
 
 #onready var test_save = load("res://addons/teskan/scripts/dialogue/test_save.gd")
@@ -25,7 +23,7 @@ var tddata = TDData.new()
 func _on_NewCharacter_pressed():
 	#var new_character = TDCharacter.new()
 	#new_character.build(tree,new_character)
-	tddata.new_character(tree)
+	TDData.new_character(tree)
 	
 func _on_NewTheme_pressed():
 	var new_tree_child = tree.create_item(themes_holder)
@@ -35,8 +33,7 @@ func _on_NewTheme_pressed():
 	
 func _on_NewTimeline_pressed():
 	#tddata.new_timeline(tree)
-	var new_timeline = Timeline.new(tree)
-	print(new_timeline.id)
+	TDData.new_timeline(tree)
 
 func _on_NewVariable_pressed():
 	var new_tree_child = tree.create_item(variables_holder)

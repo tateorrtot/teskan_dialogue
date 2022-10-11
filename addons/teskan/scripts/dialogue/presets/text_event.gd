@@ -63,6 +63,3 @@ func get_characters():
 			
 	dir.list_dir_end()
 	return characters
-
-func move_event(event):
-	print(event)

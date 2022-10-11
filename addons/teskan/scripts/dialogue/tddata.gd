@@ -7,7 +7,7 @@ class_name TDData
 static func new_character(tree):
 	var characters_holder = tree.get_root().get_children()
 	var timestamp = OS.get_ticks_usec()
-	var character_dict = {'id' : null, 'name' : 'No Name', 'colour' : Color.white, 'desc' : 'No Desc', 'faction' : 'No Faction', 'voice' : 'No Voice', 'voice_pitch_min' : 0.7, 'voice_pitch_max' : 1.3, 'portraits' : {}}
+	var character_dict = {'id' : 'null', 'name' : 'null', 'colour' : Color.white, 'desc' : 'null', 'faction' : 'null', 'voice' : 'null', 'voice_pitch_min' : 0.7, 'voice_pitch_max' : 1.3, 'portraits' : {}, 'voice_speed' : 1.0}
 	
 	character_dict.id = timestamp
 	store_var("res://teskan_data/dialogue/characters/character"+var2str(timestamp),character_dict )
@@ -38,10 +38,14 @@ static func new_timeline(tree):
 static func play_timeline(timeline):
 	print('timeline playing.')
 	print('=======')
-	for event in timeline.events:
-		print(event.type)
-		if event.has('children'):
-			print("CHILDREN")
+	print('TIMELINE: ',timeline)
+	"""if timeline.events != null:
+		for event in timeline.events:
+			print(event.type)
+			#if event.type == 'text':
+			#	print(event.text)
+			if event.has('children'):
+				play_timeline(event.children)	"""
 	
 
 ###--------------STORE AND SAVE DATA--------------###

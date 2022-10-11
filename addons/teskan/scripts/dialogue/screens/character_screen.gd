@@ -5,12 +5,13 @@ onready var tree : Tree = self.get_node("../../MainTree")
 
 
 onready var name_colour_changer  = $HSplitContainer/ScrollContainer/Pickers/NameColour/NameColourChanger
-onready var name_picker = $HSplitContainer/ScrollContainer/Pickers/NameColour/NamePicker
-onready var faction_picker = $HSplitContainer/ScrollContainer/Pickers/Faction/FactionPicker
+onready var name_picker = $HSplitContainer/ScrollContainer/Pickers/NameColour/Name
+onready var faction_picker = $HSplitContainer/ScrollContainer/Pickers/Faction/Faction
 onready var voice_picker_menu = $VoicePickerMenu
-onready var voice_picker_button = $HSplitContainer/ScrollContainer/Pickers/Voice/VoicePicker
+onready var voice_picker_button = $HSplitContainer/ScrollContainer/Pickers/Voice/Voice
 onready var voice_pitch_min = $HSplitContainer/ScrollContainer/Pickers/VoiceRange/VoicePitchMin
 onready var voice_pitch_max = $HSplitContainer/ScrollContainer/Pickers/VoiceRange/VoicePitchMax
+onready var voice_speed = $HSplitContainer/ScrollContainer/Pickers/VoiceSpeed/VoiceSpeed
 onready var portrait_list = $HSplitContainer/ScrollContainer/Pickers/PortraitList
 onready var portrait_entry = preload("res://addons/teskan/scenes/dialogue/presets/PortraitEntry.tscn")
 onready var portrait_preview = $HSplitContainer/Control/PortraitPreview
@@ -25,9 +26,13 @@ func _on_CharacterScreen_visibility_changed():
 		name_colour_changer.color = character_file.colour
 		name_picker.text = character_file.name
 		faction_picker.text = character_file.faction
-		voice_picker_button.text = character_file.voice
+		if File.new().file_exists(character_file.voice):
+			voice_picker_button.text = character_file.voice
+		else:
+			voice_picker_button.text = 'null'
 		voice_pitch_min.text = var2str(character_file.voice_pitch_min)
 		voice_pitch_max.text = var2str(character_file.voice_pitch_max)
+		voice_speed.text = var2str(character_file.voice_speed)
 		
 		#PORTRAITS
 		#Clear all children in the portrait list on the UI
@@ -96,6 +101,13 @@ func _on_VoicePitchMax_text_entered(new_text):
 	character_file.voice_pitch_max = float(new_text)
 	TDData.store_var("res://teskan_data/dialogue/characters/"+tree.get_selected().get_metadata(0),character_file)
 
+#VOICE SPEED
+func _on_VoiceSpeed_text_changed(new_text):
+	var character_file = TDData.get_var("res://teskan_data/dialogue/characters/"+tree.get_selected().get_metadata(0))
+	
+	character_file.voice_speed = float(new_text)
+	TDData.store_var("res://teskan_data/dialogue/characters/"+tree.get_selected().get_metadata(0),character_file)
+
 #PORTRAIT STUFF
 #When a portrait is clicked preview it
 func _on_PortraitEntry_selected(portrait_path):
@@ -105,3 +117,6 @@ func _on_NewPortraitEntry_pressed():
 	var new_portrait_entry = portrait_entry.instance()
 	portrait_list.add_child(new_portrait_entry)
 	new_portrait_entry.connect("selected", self, "_on_PortraitEntry_selected")
+
+
+

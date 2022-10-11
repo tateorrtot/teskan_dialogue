@@ -25,6 +25,11 @@ func _on_AddIfEvent_pressed():
 	new_if_event_preset.get_node("EventDivider/Id").text = var2str(OS.get_ticks_usec())
 	event_list.add_child(new_if_event_preset)
 	
+func _on_AddOptionEvent_pressed():
+	var new_option_event_preset = ResourceLoader.load("res://addons/teskan/scenes/dialogue/presets/events/OptionEvent.tscn","", true).instance()
+	new_option_event_preset.get_node("EventDivider/Id").text = var2str(OS.get_ticks_usec())
+	event_list.add_child(new_option_event_preset)
+	
 func _on_TimelineScreen_visibility_changed():
 	#print(TDData.get_var("res://teskan_data/dialogue/timelines/"+tree.get_selected().get_metadata(0)))
 	if self.visible == true:
@@ -33,6 +38,8 @@ func _on_TimelineScreen_visibility_changed():
 		load_timeline()
 	elif self.visible == false:
 		save_timeline()
+		
+
 
 #=================================LOADING=================================
 
@@ -45,7 +52,7 @@ func load_timeline():
 	$LoadDelay.start(0.1)
 	yield($LoadDelay,"timeout")
 	
-	TDData.play_timeline(timeline)
+	#TDData.play_timeline(timeline)
 	
 	load_events_loop(timeline,timeline.events,[])
 
@@ -58,30 +65,32 @@ func load_events_loop(timeline,parent,event_path):
 		if event.type == "text":
 			var new_ui_event = load("res://addons/teskan/scenes/dialogue/presets/events/TextEvent.tscn").instance()
 			set_ui_event_id(event,new_ui_event)
-			
 			#CHECK IF THE EVENT HAS A CHARACTER
 			if event.character_path != null:
-				new_ui_event.get_node('%CharacterName').text = TDData.get_var(event.character_path).name
-				#CHECK IF THE EVENT's CHARACTER HAS A COLOUR
-				if TDData.get_var(event.character_path).colour is Color:
-					new_ui_event.get_node('%CharacterColour').color = TDData.get_var(event.character_path).colour
-					
-				new_ui_event.character_path = event.character_path
-					
+				if File.new().file_exists(event.character_path):
+					new_ui_event.get_node('%CharacterName').text = TDData.get_var(event.character_path).name
+					#CHECK IF THE EVENT's CHARACTER HAS A COLOUR
+					if TDData.get_var(event.character_path).colour is Color:
+						new_ui_event.get_node('%CharacterColour').color = TDData.get_var(event.character_path).colour
+					new_ui_event.character_path = event.character_path
 			if event.text != null:
 				new_ui_event.get_node('%Text').text = event.text
-			
-			
 			add_ui_event_child(new_ui_event,event_path,event_list,0)
 		
 		#choice events
 		if event.type == "choice":
 			var new_ui_event = load("res://addons/teskan/scenes/dialogue/presets/events/ChoiceEvent.tscn").instance()
 			set_ui_event_id(event,new_ui_event)
-		#	print("delay start")
-			#yield($LoadDelay,"timeout")
-			#print("delay done")
-			#new_choice_event_preset.get_node("EventDivider/Id").text = timeline.events[index].id
+			add_ui_event_child(new_ui_event,event_path,event_list,0)
+			if event.desc != null:
+				#print('event.desc: ',event.desc)
+				new_ui_event.get_node('%Description').text = event.desc
+			check_for_children_while_loading(timeline,event,event_path)
+			
+				#choice events
+		if event.type == "option":
+			var new_ui_event = load("res://addons/teskan/scenes/dialogue/presets/events/OptionEvent.tscn").instance()
+			set_ui_event_id(event,new_ui_event)
 			add_ui_event_child(new_ui_event,event_path,event_list,0)
 				
 			check_for_children_while_loading(timeline,event,event_path)
@@ -129,8 +138,6 @@ func save_timeline():
 	save_events_loop(timeline,$HSplitContainer/LeftSide/EventList.get_children(),[])
 	
 	TDData.store_var(last_selected_timeline_path,timeline)
-	
-	print(TDData.get_var(last_selected_timeline_path))
 
 func save_events_loop(timeline,ui_parent,event_path):
 	#LOOP THROUGH ALL THE EVENTS IN THE SELECTED TIMELINE TO LOAD THEM
@@ -144,12 +151,21 @@ func save_events_loop(timeline,ui_parent,event_path):
 				new_event.text = ui_event.get_node('%Text').text
 			
 			add_event_child(new_event,event_path,timeline.events,0)
-			
-		
-		#choice events
+		#CHOICE
 		if ui_event.get_node("Type").text == "Choice":
-			add_event_child({'type' : 'choice', 'desc' : 'No Desc', 'children' : [], 'id' : get_event_id(ui_event)},event_path,timeline.events,0)
-			#print("new events! ",new_timeline_events)
+			#print("Choice found!")
+			var new_event = {'type' : 'choice', 'desc' : null, 'children' : [], 'id' : get_event_id(ui_event)}
+			new_event.desc = ui_event.get_node("%Description").text
+			
+			#print(new_event.desc)
+			add_event_child(new_event,event_path,timeline.events,0)
+				
+			
+			check_for_children_while_saving(timeline,ui_event,event_path)
+		#OPTION
+		if ui_event.get_node("Type").text == "Option":
+			print("Option found!")
+			add_event_child({'type' : 'option', 'prompt' : null, 'children' : [], 'id' : get_event_id(ui_event)},event_path,timeline.events,0)
 			check_for_children_while_saving(timeline,ui_event,event_path)
 
 #CHECK IF AN EVENT HAS CHILDREN AND DO THE SAVE LOOP ON THE EVENT TO SAVE ITS CHILDREN
@@ -191,3 +207,6 @@ func add_event_child(dict,event_path,parent,index):
 func get_event_id(ui_event):
 	var id = ui_event.get_node("EventDivider/Id").text
 	return id
+
+
+
