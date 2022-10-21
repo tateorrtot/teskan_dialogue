@@ -65,7 +65,7 @@ __meta__ = {
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MainBody"]
-margin_right = 1024.0
+margin_right = 1920.0
 margin_bottom = 24.0
 
 [node name="Label" type="Label" parent="MainBody/HBoxContainer"]
@@ -85,20 +85,20 @@ rect_min_size = Vector2( 25, 20 )
 [node name="CharacterName" type="LineEdit" parent="MainBody/HBoxContainer"]
 unique_name_in_owner = true
 margin_left = 133.0
-margin_right = 996.0
+margin_right = 1892.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 editable = false
 
 [node name="SelectCharacter" type="Button" parent="MainBody/HBoxContainer"]
-margin_left = 1000.0
-margin_right = 1024.0
+margin_left = 1896.0
+margin_right = 1920.0
 margin_bottom = 24.0
 text = "..."
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MainBody"]
 margin_top = 28.0
-margin_right = 1024.0
+margin_right = 1920.0
 margin_bottom = 88.0
 
 [node name="Label" type="Label" parent="MainBody/HBoxContainer2"]
@@ -111,7 +111,7 @@ text = "Text:"
 [node name="Text" type="TextEdit" parent="MainBody/HBoxContainer2"]
 unique_name_in_owner = true
 margin_left = 104.0
-margin_right = 1024.0
+margin_right = 1920.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 0, 60 )
 size_flags_horizontal = 3

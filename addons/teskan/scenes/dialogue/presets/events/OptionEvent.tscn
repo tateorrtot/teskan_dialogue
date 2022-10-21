@@ -48,9 +48,10 @@ margin_bottom = 22.0
 rect_min_size = Vector2( 100, 0 )
 text = "Prompt:"
 
-[node name="LineEdit" type="LineEdit" parent="MainBody"]
+[node name="Prompt" type="LineEdit" parent="MainBody"]
+unique_name_in_owner = true
 margin_left = 104.0
-margin_right = 1024.0
+margin_right = 1920.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 

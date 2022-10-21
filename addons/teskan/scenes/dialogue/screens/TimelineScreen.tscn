@@ -20,7 +20,7 @@ split_offset = 800
 
 [node name="LeftSide" type="ScrollContainer" parent="HSplitContainer"]
 margin_right = 800.0
-margin_bottom = 600.0
+margin_bottom = 1080.0
 rect_min_size = Vector2( 0, 600 )
 
 [node name="EventList" type="VBoxContainer" parent="HSplitContainer/LeftSide"]
@@ -29,8 +29,8 @@ size_flags_horizontal = 3
 
 [node name="RightSide" type="ScrollContainer" parent="HSplitContainer"]
 margin_left = 812.0
-margin_right = 1024.0
-margin_bottom = 600.0
+margin_right = 1920.0
+margin_bottom = 1080.0
 
 [node name="Control" type="Control" parent="HSplitContainer/RightSide"]
 
@@ -63,6 +63,12 @@ margin_right = 203.0
 margin_bottom = 92.0
 text = "Add Option Event"
 
+[node name="AddExitEvent" type="Button" parent="HSplitContainer/RightSide/Control/AddEvents"]
+margin_top = 96.0
+margin_right = 203.0
+margin_bottom = 116.0
+text = "Add Exit Event"
+
 [node name="VSeparator" type="VSeparator" parent="HSplitContainer/RightSide/Control"]
 margin_left = -4.0
 margin_top = -1.0
@@ -74,3 +80,4 @@ margin_bottom = 599.0
 [connection signal="pressed" from="HSplitContainer/RightSide/Control/AddEvents/AddChoiceEvent" to="." method="_on_AddChoiceEvent_pressed"]
 [connection signal="pressed" from="HSplitContainer/RightSide/Control/AddEvents/AddIfEvent" to="." method="_on_AddIfEvent_pressed"]
 [connection signal="pressed" from="HSplitContainer/RightSide/Control/AddEvents/AddOptionEvent" to="." method="_on_AddOptionEvent_pressed"]
+[connection signal="pressed" from="HSplitContainer/RightSide/Control/AddEvents/AddExitEvent" to="." method="_on_AddExitEvent_pressed"]

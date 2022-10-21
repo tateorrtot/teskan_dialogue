@@ -3,7 +3,6 @@ extends Tree
 
 var tree = self
 var root = tree.create_item()
-var tddata = TDData.new()
 
 var characters_tree_holder = tree.create_item(root)
 var themes_tree_holder = tree.create_item(root)
@@ -67,10 +66,20 @@ func _ready():
 			#print(files['characters'].size())
 			add_tree_item(timelines_tree_holder,files['timelines'][current_loop],"timelines")
 			current_loop += 1
+			
+	#LOAD ALL THE THEMES IN THE DATA FILES
+	current_loop = 0
+	while true:
+		if current_loop >= files['themes'].size():
+			break
+		elif files['themes'].size() > 0:
+			#print(files['characters'].size())
+			add_tree_item(themes_tree_holder,files['themes'][current_loop],"themes")
+			current_loop += 1
 
 #ADD A NEW TREE ITEM	
 func add_tree_item(tree_holder,metadata,type : String):
-	var loaded_file = tddata.get_var("res://teskan_data/dialogue/"+type+"/"+metadata)
+	var loaded_file = TDData.get_var("res://teskan_data/dialogue/"+type+"/"+metadata)
 	#print(load(loaded_file))
 	
 	var new_tree_child = tree.create_item(tree_holder)
@@ -147,11 +156,11 @@ func _on_PopupMenu_index_pressed(index):
 	
 	#ADD A RESOURCE
 	if popup_selected == "Add Character":
-		tddata.new_character(tree)
+		TDData.new_character(tree)
 	elif popup_selected == "Add Timeline":
-		pass
+		TDData.new_timeline(tree)
 	elif popup_selected == "Add Theme":
-		pass
+		TDData.new_theme(tree)
 	elif popup_selected == "Add Variable":
 		pass
 

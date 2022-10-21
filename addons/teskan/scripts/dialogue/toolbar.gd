@@ -26,9 +26,7 @@ func _on_NewCharacter_pressed():
 	TDData.new_character(tree)
 	
 func _on_NewTheme_pressed():
-	var new_tree_child = tree.create_item(themes_holder)
-	new_tree_child.set_text(0, "New Theme")
-	new_tree_child.set_icon(0,load("res://addons/teskan/sprites/theme.png"))
+	TDData.new_theme(tree)
 	
 	
 func _on_NewTimeline_pressed():
