@@ -5,7 +5,7 @@ anchor_right = 1.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 0, 30 )
 size_flags_horizontal = 3
-color = Color( 0.196078, 0.196078, 0.196078, 0.392157 )
+color = Color( 0.176471, 0.176471, 0.176471, 0.392157 )
 
 [node name="VisualDivider" type="ColorRect" parent="."]
 visible = false
@@ -14,8 +14,9 @@ anchor_right = 1.0
 anchor_bottom = 0.533
 margin_top = 1.0
 margin_bottom = 1.0
-color = Color( 0.588235, 0.588235, 0.588235, 1 )
+color = Color( 0.176471, 0.176471, 0.176471, 1 )
 
 [node name="Id" type="Label" parent="."]
+visible = false
 margin_bottom = 14.0
 text = "12345"

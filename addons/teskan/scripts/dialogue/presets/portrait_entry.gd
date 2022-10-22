@@ -18,7 +18,7 @@ func _on_PortraitDelete_pressed():
 
 #POPUP THE MENU FOR FINDING THE FILE PATH
 func _on_PortraitFindPath_pressed():
-	$PortraitPickerMenu.popup(Rect2(Vector2(500,500),Vector2(1000,1000)))
+	$PortraitPickerMenu.popup_centered(Vector2(800,800))
 
 #SAVE THE DATA WHEN THE FILE IS SELECTED
 func _on_PortraitPickerMenu_file_selected(path):

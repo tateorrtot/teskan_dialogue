@@ -85,7 +85,7 @@ func _on_FactionPicker_text_entered(new_text):
 	
 #CHANGE VOICE
 func _on_VoicePicker_pressed():
-	voice_picker_menu.popup(Rect2(Vector2(500,500),Vector2(1000,1000)))
+	voice_picker_menu.popup_centered(Vector2(800,800))
 func _on_VoicePickerMenu_file_selected(path):
 	var character_file = TDData.get_var("res://teskan_data/dialogue/characters/"+tree.get_selected().get_metadata(0))
 	var audio_stream_player = $AudioStreamPlayer
@@ -159,7 +159,7 @@ func _on_Theme_pressed():
 	for i in themes:
 		$ThemeMenu.add_item(i.name)
 	
-	$ThemeMenu.popup(Rect2(Vector2(750,200),Vector2(500,500)))
+	$ThemeMenu.popup_centered(Vector2(800,800))
 
 #GET ALL THE CHARACTERS THAT CAN BE PICKED
 func get_themes():

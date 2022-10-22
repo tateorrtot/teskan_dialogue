@@ -1,2 +1,2 @@
 extends Node
-signal loop_complete
+signal loop_completed

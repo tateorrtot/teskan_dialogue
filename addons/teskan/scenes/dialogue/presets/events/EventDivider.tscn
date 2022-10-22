@@ -18,5 +18,6 @@ margin_bottom = 1.0
 color = Color( 0.588235, 0.588235, 0.588235, 1 )
 
 [node name="Id" type="Label" parent="."]
+visible = false
 margin_bottom = 14.0
 text = "12345"

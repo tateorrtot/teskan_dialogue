@@ -8,6 +8,7 @@ var main_panel_instance
 
 
 func _enter_tree():
+	add_custom_type("TimelinePlayer", "Node", load("res://addons/teskan/scripts/dialogue/timeline_player.gd"), load("res://addons/teskan/sprites/timeline.png"))
 	#add_custom_type("TestSave","Resource",preload("res://addons/teskan/scripts/dialogue/test_save.gd"),preload("res://addons/teskan/sprites/main_menu_icon.png"))
 	
 	main_panel_instance = MainPanel.instance()
@@ -28,6 +29,7 @@ func _enter_tree():
 
 
 func _exit_tree():
+	remove_custom_type("TimelinePlayer")
 	#remove_custom_type("TestSave")
 	
 	if main_panel_instance:

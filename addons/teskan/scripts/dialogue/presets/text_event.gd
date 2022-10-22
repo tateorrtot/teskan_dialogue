@@ -2,7 +2,8 @@ tool
 extends Control
 
 onready var tree = self.find_parent("Dialogue").get_node("MainTree")
-var characters
+var characters = []
+var portraits
 
 onready var timeline_screen = self.find_parent("TimelineScreen")
 onready var events_list = timeline_screen.get_node("HSplitContainer/LeftSide/EventList")
@@ -21,7 +22,7 @@ func _on_SelectCharacter_pressed():
 	for i in characters:
 		$PopupMenu.add_item(i.name)
 	
-	$PopupMenu.popup(Rect2(Vector2(750,200),Vector2(500,500)))
+	$PopupMenu.popup_centered(Vector2(800,800))
 
 	#print(self.get_node("%Character").text)
 #WHEN THE USER SELECTS A CHARACTER IN THE CHARACTER POP UP MENU, 
@@ -63,3 +64,19 @@ func get_characters():
 			
 	dir.list_dir_end()
 	return characters
+
+
+func _on_SelectPortrait_pressed():
+	if $'%CharacterName'.text == '':
+		return
+		
+	portraits = TDData.get_var(character_path).portraits.keys()
+	
+	$PortraitMenu.clear()
+	for i in portraits:
+		$PortraitMenu.add_item(i)
+	
+	$PortraitMenu.popup_centered(Vector2(800,800))
+
+func _on_PortraitMenu_index_pressed(index):
+	$'%PortraitName'.text = portraits[index]

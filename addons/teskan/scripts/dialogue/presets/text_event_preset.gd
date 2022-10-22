@@ -19,7 +19,7 @@ func _on_SelectCharacter_pressed():
 	for i in characters:
 		$PopupMenu.add_item(i.name)
 	
-	$PopupMenu.popup(Rect2(Vector2(750,200),Vector2(500,500)))
+	$PopupMenu.popup_centered(Vector2(800,800))
 
 	
 #WHEN THE USER SELECTS A CHARACTER IN THE CHARACTER POP UP MENU, 

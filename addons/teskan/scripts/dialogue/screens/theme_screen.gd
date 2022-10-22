@@ -36,7 +36,7 @@ func _on_Name_text_changed(new_text):
 	tree.get_selected().set_text(0,new_text)
 
 func _on_Font_pressed():
-	$FontMenu.popup(Rect2(Vector2(500,500),Vector2(1000,1000)))
+	$FontMenu.popup_centered(Vector2(800,800))
 
 func _on_FontMenu_file_selected(path):
 	$"%Font".text = $FontMenu.current_path
@@ -74,7 +74,7 @@ func _on_BackgroundMenu_file_selected(path):
 	get_store_file('background',$BackgroundMenu.current_path)
 	
 func _on_Background_pressed():
-	$BackgroundMenu.popup(Rect2(Vector2(500,500),Vector2(1000,1000)))
+	$BackgroundMenu.popup_centered(Vector2(800,800))
 	
 func _on_FontOutlineSize_text_changed(new_text):
 	get_store_file('font_outline_size',int(new_text))
@@ -125,7 +125,8 @@ func LoadPreview():
 	if small_font.size > 1000 or medium_font.size > 1000 or large_font.size > 1000:
 		print("ERROR: Font to large. May crash program.")
 		return
-		
+	
+	$'%NameBackground'.color = get_file().name_background_colour
 	$'%NameStretcher'.add_font_override("font",medium_font)
 	$'%NameLabel'.add_font_override("font",medium_font)
 	$'%DisplayText'.add_font_override("normal_font",medium_font)
@@ -142,7 +143,7 @@ func _on_CharacterSelecter_pressed():
 	for i in characters:
 		$PopupMenu.add_item(i.name)
 	
-	$PopupMenu.popup(Rect2(Vector2(750,200),Vector2(500,500)))
+	$PopupMenu.popup_centered(Vector2(800,800))
 
 	#print(self.get_node("%Character").text)
 #WHEN THE USER SELECTS A CHARACTER IN THE CHARACTER POP UP MENU, 

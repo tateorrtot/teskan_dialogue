@@ -1,11 +1,12 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://addons/teskan/scripts/dialogue/screens/theme_screen.gd" type="Script" id=1]
-[ext_resource path="res://Testing/Mountains.png" type="Texture" id=2]
+[ext_resource path="res://addons/teskan/sprites/default_background.png" type="Texture" id=2]
 [ext_resource path="res://Testing/troika.otf" type="DynamicFontData" id=3]
-[ext_resource path="res://Testing/fox2.png" type="Texture" id=4]
+[ext_resource path="res://icon.png" type="Texture" id=4]
 [ext_resource path="res://Testing/COMIC.TTF" type="DynamicFontData" id=5]
 [ext_resource path="res://addons/teskan/sprites/character.png" type="Texture" id=6]
+[ext_resource path="res://addons/teskan/fonts/NotoSans-Regular.ttf" type="DynamicFontData" id=7]
 
 [sub_resource type="DynamicFont" id=21]
 size = 14
@@ -18,27 +19,16 @@ outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=24]
-size = 48
-font_data = ExtResource( 3 )
+size = 20
+font_data = ExtResource( 7 )
 
-[sub_resource type="Theme" id=20]
-RichTextLabel/colors/default_color = Color( 1, 1, 1, 1 )
-RichTextLabel/colors/font_color_selected = Color( 0.49, 0.49, 0.49, 1 )
-RichTextLabel/colors/font_color_shadow = Color( 0, 0, 0, 0 )
-RichTextLabel/colors/selection_color = Color( 0.1, 0.1, 1, 0.8 )
-RichTextLabel/constants/line_separation = 1
-RichTextLabel/constants/shadow_as_outline = 0
-RichTextLabel/constants/shadow_offset_x = 1
-RichTextLabel/constants/shadow_offset_y = 1
-RichTextLabel/constants/table_hseparation = 3
-RichTextLabel/constants/table_vseparation = 3
-RichTextLabel/fonts/bold_font = null
-RichTextLabel/fonts/bold_italics_font = null
-RichTextLabel/fonts/italics_font = null
-RichTextLabel/fonts/mono_font = null
-RichTextLabel/fonts/normal_font = SubResource( 24 )
-RichTextLabel/styles/focus = null
-RichTextLabel/styles/normal = null
+[sub_resource type="DynamicFont" id=25]
+size = 50
+font_data = ExtResource( 7 )
+
+[sub_resource type="DynamicFont" id=26]
+size = 40
+font_data = ExtResource( 7 )
 
 [sub_resource type="StyleBoxEmpty" id=22]
 
@@ -377,7 +367,7 @@ margin_top = 482.0
 margin_right = 856.0
 margin_bottom = 514.0
 custom_fonts/font = SubResource( 21 )
-text = "Hi! I'm [color=#c9c8d9]Sochi[/color] and I'd like to welcome you to [wave amp=50 freq=2][color=#968ffe]BERING![/color][/wave]"
+text = "[rainbow freq=1 sat=10 val=20]Hi![/rainbow] This is the [color=#c9c8d9]default[/color] text with [b]BIG[/b] and [i]small[/i] text. Give it a [wave amp=50freq=2][color=#000000]TRY![/color][/wave][i](Line breaks also work, PS this uses BBCode!)[/i]"
 
 [node name="GuiControl" type="Control" parent="."]
 margin_left = 16.0
@@ -412,7 +402,6 @@ unique_name_in_owner = true
 anchor_right = 0.994
 anchor_bottom = 1.0
 margin_right = 0.239998
-color = Color( 0, 0, 0, 1 )
 
 [node name="NameLabel" type="Label" parent="GuiControl/NameStretcher"]
 unique_name_in_owner = true
@@ -422,7 +411,7 @@ margin_right = 0.239998
 rect_pivot_offset = Vector2( -731, -179 )
 size_flags_horizontal = 6
 custom_fonts/font = SubResource( 4 )
-text = " I"
+text = " "
 valign = 1
 autowrap = true
 
@@ -449,22 +438,27 @@ margin_left = 0.399994
 margin_top = -0.0400085
 margin_right = 9.59998
 margin_bottom = -0.0400085
-color = Color( 1, 1, 1, 0.392157 )
+color = Color( 0, 0, 0, 0.392157 )
 
 [node name="DisplayText" type="RichTextLabel" parent="GuiControl/TextAccent"]
 unique_name_in_owner = true
 anchor_left = 0.011
-anchor_top = 0.05
+anchor_top = 0.005
 anchor_right = 0.989
 anchor_bottom = 1.0
-margin_left = -0.11994
+margin_left = -0.120001
 margin_right = 0.119995
-theme = SubResource( 20 )
+margin_bottom = -1.52588e-05
+custom_fonts/italics_font = SubResource( 24 )
+custom_fonts/bold_font = SubResource( 25 )
+custom_fonts/normal_font = SubResource( 26 )
 custom_styles/focus = SubResource( 22 )
 custom_styles/normal = SubResource( 23 )
 bbcode_enabled = true
-bbcode_text = "Hi! I'm [color=#c9c8d9]Sochi[/color] and I'd like to welcome you to [wave amp=50 freq=2][color=#968ffe]BERING![/color][/wave]"
-text = "Hi! I'm [color=#c9c8d9]Sochi[/color] and I'd like to welcome you to [wave amp=50 freq=2][color=#968ffe]BERING![/color][/wave]"
+bbcode_text = "[rainbow freq=1 sat=10 val=20]Hi![/rainbow] This is the [color=#c9c8d9]default[/color] text with [b]BIG[/b] and [i]small[/i] text. Give it a [wave amp=50freq=2][color=#000000]TRY![/color][/wave]
+[i](Line breaks also work, PS this uses BBCode!)[/i]"
+text = "Hi! This is the default text with BIG and small text. Give it a TRY!
+(Line breaks also work, PS this uses BBCode!)"
 
 [connection signal="visibility_changed" from="." to="." method="_on_ThemeScreen_visibility_changed"]
 [connection signal="color_changed" from="ScrollContainer/Pickers/NameColour/NameColourChanger" to="." method="_on_NameColourChanger_color_changed"]
