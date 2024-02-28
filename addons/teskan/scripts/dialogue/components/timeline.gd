@@ -1,4 +1,4 @@
-tool
+@tool
 extends TDComponent
 class_name Timeline
 
@@ -7,10 +7,10 @@ class_name Timeline
 var events = []
 
 func _init(tree):
-	var timestamp = OS.get_ticks_usec()
+	var timestamp = Time.get_ticks_usec()
 	id = timestamp
 	
-	TDData.store_var("res://teskan_data/dialogue/timelines/timeline"+var2str(timestamp),self )
+	TDData.store_var("res://teskan_data/dialogue/timelines/timeline"+var_to_str(timestamp),self )
 
 	load_to_ui(tree,timestamp)
 
@@ -20,5 +20,5 @@ func load_to_ui(tree,timestamp):
 	
 	new_tree_child.set_text(0, "No Name")
 	new_tree_child.set_icon(0,load("res://addons/teskan/sprites/timeline.png"))
-	new_tree_child.set_metadata(0,'timeline'+var2str(timestamp))
-	#new_tree_child.set_metadata(0,'timeline'+var2str(timestamp))
+	new_tree_child.set_metadata(0,'timeline'+var_to_str(timestamp))
+	#new_tree_child.set_metadata(0,'timeline'+var_to_str(timestamp))

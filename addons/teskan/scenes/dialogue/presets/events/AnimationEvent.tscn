@@ -1,0 +1,111 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://addons/teskan/scenes/dialogue/presets/MoveEvent.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/teskan/scenes/dialogue/presets/EventDivider.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/teskan/scenes/dialogue/presets/DeleteEvent.tscn" type="PackedScene" id=4]
+
+[node name="AnimationEvent" type="Control"]
+anchor_right = 1.0
+offset_bottom = 135.0
+custom_minimum_size = Vector2( 0, 195 )
+
+[node name="EventDivider" parent="." instance=ExtResource( 3 )]
+anchor_bottom = 0.273
+offset_bottom = -49.03
+
+[node name="DeleteEvent" parent="." instance=ExtResource( 4 )]
+
+[node name="MoveEvent" parent="." instance=ExtResource( 2 )]
+
+[node name="Type" type="LineEdit" parent="."]
+offset_left = 68.0
+offset_top = 31.0
+offset_right = 168.0
+offset_bottom = 55.0
+custom_minimum_size = Vector2( 100, 0 )
+text = "Animation"
+editable = false
+selecting_enabled = false
+
+[node name="Background" type="ColorRect" parent="."]
+offset_top = 55.0
+offset_right = 1920.0
+offset_bottom = 179.0
+custom_minimum_size = Vector2( 50, 30 )
+color = Color( 0, 0.196078, 0.196078, 1 )
+
+[node name="MainBody" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+offset_top = 57.0
+offset_bottom = 145.0
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainBody"]
+offset_right = 1920.0
+offset_bottom = 14.0
+
+[node name="Label" type="Label" parent="MainBody/HBoxContainer"]
+offset_right = 658.0
+offset_bottom = 14.0
+custom_minimum_size = Vector2( 100, 0 )
+text = "TO USE: 1. Put path of AnimationPlayer node or ancestor of it. 2. Type name of animation to be played. "
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MainBody"]
+offset_top = 18.0
+offset_right = 1920.0
+offset_bottom = 42.0
+
+[node name="Label" type="Label" parent="MainBody/HBoxContainer3"]
+offset_top = 5.0
+offset_right = 100.0
+offset_bottom = 19.0
+custom_minimum_size = Vector2( 100, 0 )
+text = "Node Path3D:"
+
+[node name="NodePath" type="LineEdit" parent="MainBody/HBoxContainer3"]
+unique_name_in_owner = true
+offset_left = 104.0
+offset_right = 1920.0
+offset_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MainBody"]
+offset_top = 46.0
+offset_right = 1920.0
+offset_bottom = 70.0
+
+[node name="Label" type="Label" parent="MainBody/HBoxContainer2"]
+offset_top = 5.0
+offset_right = 100.0
+offset_bottom = 19.0
+custom_minimum_size = Vector2( 100, 0 )
+text = "Animation:"
+
+[node name="Animation" type="LineEdit" parent="MainBody/HBoxContainer2"]
+unique_name_in_owner = true
+offset_left = 104.0
+offset_right = 1920.0
+offset_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="MainBody"]
+offset_top = 74.0
+offset_right = 1920.0
+offset_bottom = 98.0
+
+[node name="Label" type="Label" parent="MainBody/HBoxContainer4"]
+offset_top = 5.0
+offset_right = 100.0
+offset_bottom = 19.0
+custom_minimum_size = Vector2( 100, 0 )
+text = "Wait til Done:"
+
+[node name="WaitUntilDone" type="LineEdit" parent="MainBody/HBoxContainer4"]
+unique_name_in_owner = true
+offset_left = 104.0
+offset_right = 1920.0
+offset_bottom = 24.0
+size_flags_horizontal = 3
+text = "False"

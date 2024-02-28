@@ -1,12 +1,12 @@
-tool
+@tool
 extends Control
 
-onready var tree = self.get_node("../MainTree")
-onready var root = tree.get_root()
+@onready var tree = self.get_parent().get_node("MainTree")
+@onready var root = tree.get_root()
 
-onready var tree_characters_holder = root.get_children()
-onready var tree_themes_holder = root.get_children().get_next()
-onready var tree_timelines_holder = root.get_children().get_next().get_next()
+@onready var tree_characters_holder = root.get_child(0)
+@onready var tree_themes_holder = root.get_child(1)
+@onready var tree_timelines_holder = root.get_child(2)
 
 func _on_MainTree_cell_selected():
 	var tree_item_parent = tree.get_selected().get_parent()

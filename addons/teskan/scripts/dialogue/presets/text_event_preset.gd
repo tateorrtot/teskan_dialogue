@@ -1,12 +1,12 @@
-tool
+@tool
 extends Control
 
-onready var tree = self.find_parent("Dialogue").get_node("MainTree")
+@onready var tree = self.find_parent("Dialogue").get_node("MainTree")
 var characters
 
-onready var timeline_screen = self.find_parent("TimelineScreen")
-onready var events_list = timeline_screen.get_node("HSplitContainer/LeftSide/EventList")
-onready var wait_after_drag = timeline_screen.get_node("WaitAfterDrag")
+@onready var timeline_screen = self.find_parent("TimelineScreen")
+@onready var events_list = timeline_screen.get_node("HSplitContainer/LeftSide/EventList")
+@onready var wait_after_drag = timeline_screen.get_node("WaitAfterDrag")
 
 var is_dragging = false
 var change_order = false
@@ -53,7 +53,7 @@ func get_characters():
 	var characters = []
 	var dir = Directory.new()
 	dir.open("res://teskan_data/dialogue/characters")
-	dir.list_dir_begin()
+	dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 	
 	while true:
 		var file = dir.get_next()
@@ -65,9 +65,6 @@ func get_characters():
 			
 	dir.list_dir_end()
 	return characters
-
-func _on_TextEdit_text_changed():
-	print($VBoxContainer/HBoxContainer2/TextEdit.text)
 
 #===========================DRAGGING AND DROPPING===========================#
 #START DRAGGING
@@ -93,15 +90,15 @@ func _on_MainBody_mouse_exited():
 #MOVE THE EVENT
 func move_event(event):
 	wait_after_drag.start(0.0001)
-	yield(wait_after_drag,"timeout")
+	await wait_after_drag.timeout
 	
-	#print("change order ",timeline_screen.change_order)
+	#("change order ",timeline_screen.change_order)
 	if timeline_screen.is_dragging == true and change_order == true:
 		events_list.move_child(event,self.get_index())
 		timeline_screen.is_dragging = false
 	elif timeline_screen.is_dragging == true and add_child_event == true:
-		print("Add child")
+		##print("Add child")
 
-"""
+
 func move_event(event):
-	print(event)
+	(event)"""

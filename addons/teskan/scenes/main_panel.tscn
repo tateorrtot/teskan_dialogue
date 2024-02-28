@@ -1,25 +1,20 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://figj7r8o2mj7"]
 
-[ext_resource path="res://addons/teskan/scenes/dialogue/Dialogue.tscn" type="PackedScene" id=1]
+[ext_resource type="PackedScene" uid="uid://dxo4gwqoj06v0" path="res://addons/teskan/scenes/dialogue/Dialogue.tscn" id="1"]
 
 [node name="TabContainer" type="TabContainer"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_vertical = 3
-tab_align = 0
 
-[node name="Dialogue" parent="." instance=ExtResource( 1 )]
-anchor_left = 0.0
-anchor_top = 0.0
-margin_left = 4.0
-margin_top = 32.0
+[node name="Dialogue" parent="." instance=ExtResource("1")]
+layout_mode = 2
 
 [node name="Other Tab" type="Control" parent="."]
 visible = false
-margin_right = 40.0
-margin_bottom = 40.0
+layout_mode = 2
 
 [node name="Other Tab 2" type="Control" parent="."]
 visible = false
-margin_right = 40.0
-margin_bottom = 40.0
+layout_mode = 2

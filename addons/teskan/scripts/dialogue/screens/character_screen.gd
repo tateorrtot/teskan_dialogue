@@ -1,21 +1,21 @@
-tool
+@tool
 extends Control
 
-onready var tree : Tree = self.get_node("../../MainTree")
+@onready var tree : Tree = self.get_parent().get_parent().get_node("MainTree")
 
 
-onready var name_colour_changer  = $HSplitContainer/ScrollContainer/Pickers/NameColour/NameColourChanger
-onready var name_picker = $HSplitContainer/ScrollContainer/Pickers/NameColour/Name
-onready var faction_picker = $HSplitContainer/ScrollContainer/Pickers/Faction/Faction
-onready var theme_picker = $HSplitContainer/ScrollContainer/Pickers/Theme/Theme
-onready var voice_picker_menu = $VoicePickerMenu
-onready var voice_picker_button = $HSplitContainer/ScrollContainer/Pickers/Voice/Voice
-onready var voice_pitch_min = $HSplitContainer/ScrollContainer/Pickers/VoiceRange/VoicePitchMin
-onready var voice_pitch_max = $HSplitContainer/ScrollContainer/Pickers/VoiceRange/VoicePitchMax
-onready var voice_speed = $HSplitContainer/ScrollContainer/Pickers/VoiceSpeed/VoiceSpeed
-onready var portrait_list = $HSplitContainer/ScrollContainer/Pickers/PortraitList
-onready var portrait_entry = preload("res://addons/teskan/scenes/dialogue/presets/PortraitEntry.tscn")
-onready var portrait_preview = $HSplitContainer/Control/PortraitPreview
+@onready var name_colour_changer  = $HSplitContainer/ScrollContainer/Pickers/NameColour/NameColourChanger
+@onready var name_picker = $HSplitContainer/ScrollContainer/Pickers/NameColour/Name
+@onready var faction_picker = $HSplitContainer/ScrollContainer/Pickers/Faction/Faction
+@onready var theme_picker = $HSplitContainer/ScrollContainer/Pickers/Theme/Theme
+@onready var voice_picker_menu = $VoicePickerMenu
+@onready var voice_picker_button = $HSplitContainer/ScrollContainer/Pickers/Voice/Voice
+@onready var voice_pitch_min = $HSplitContainer/ScrollContainer/Pickers/VoiceRange/VoicePitchMin
+@onready var voice_pitch_max = $HSplitContainer/ScrollContainer/Pickers/VoiceRange/VoicePitchMax
+@onready var voice_speed = $HSplitContainer/ScrollContainer/Pickers/VoiceSpeed/VoiceSpeed
+@onready var portrait_list = $HSplitContainer/ScrollContainer/Pickers/PortraitList
+@onready var portrait_entry = preload("res://addons/teskan/scenes/dialogue/presets/PortraitEntry.tscn")
+@onready var portrait_preview = $HSplitContainer/Control/PortraitPreview
 
 var themes = []
 var theme_path : String
@@ -29,13 +29,13 @@ func _on_CharacterScreen_visibility_changed():
 		name_colour_changer.color = character_file.colour
 		name_picker.text = character_file.name
 		faction_picker.text = character_file.faction
-		if File.new().file_exists(character_file.voice):
+		if FileAccess.file_exists(character_file.voice):
 			voice_picker_button.text = character_file.voice
 		else:
 			voice_picker_button.text = 'null'
-		voice_pitch_min.text = var2str(character_file.voice_pitch_min)
-		voice_pitch_max.text = var2str(character_file.voice_pitch_max)
-		voice_speed.text = var2str(character_file.voice_speed)
+		voice_pitch_min.text = var_to_str(character_file.voice_pitch_min)
+		voice_pitch_max.text = var_to_str(character_file.voice_pitch_max)
+		voice_speed.text = var_to_str(character_file.voice_speed)
 		
 		if character_file.theme != 'null':
 			theme_picker.text = TDData.get_var(character_file.theme).name
@@ -50,9 +50,9 @@ func _on_CharacterScreen_visibility_changed():
 		#Load all the portraits from the file onto the UI
 		var loaded_preview = false
 		for portrait in character_file.portraits:
-			var new_portrait_entry = portrait_entry.instance()
+			var new_portrait_entry = portrait_entry.instantiate()
 			portrait_list.add_child(new_portrait_entry)
-			new_portrait_entry.connect("selected", self, "_on_PortraitEntry_selected")
+			new_portrait_entry.connect("selected",Callable(self,"_on_PortraitEntry_selected"))
 			new_portrait_entry.get_node("PortraitName").text = portrait
 			new_portrait_entry.get_node("PortraitPath").text = character_file.portraits[portrait]
 			
@@ -122,22 +122,20 @@ func _on_PortraitEntry_selected(portrait_path):
 	portrait_preview.texture = load(portrait_path)
 #Make a new portrait entry
 func _on_NewPortraitEntry_pressed():
-	var new_portrait_entry = portrait_entry.instance()
+	var new_portrait_entry = portrait_entry.instantiate()
 	portrait_list.add_child(new_portrait_entry)
-	new_portrait_entry.connect("selected", self, "_on_PortraitEntry_selected")
-
-
-
+	
+	new_portrait_entry.connect("selected",Callable(self,"_on_PortraitEntry_selected"))
 
 #THEME
 func _on_ThemeMenu_index_pressed(index):
-	var themes_in_tree = tree.get_root().get_children().get_next()
-	var current_tree_item_theme = themes_in_tree.get_children()
+	var themes_in_tree = tree.get_root().get_child(1)
+	var current_tree_item_theme = themes_in_tree.get_child(0)
 	var item_selected = tree.get_selected()
 	
 	#LOOP THROUGH ALL THE CHARACTERS IN THE TREE UNTIL I FIND THE ONE THAT WAS SELECTED IN THE POPUP MENU
 	while true:
-		print(current_tree_item_theme)
+		##print(current_tree_item_theme)
 		#If the current character being iterated over is what we picked, save it
 		if current_tree_item_theme.get_text(0) == themes[index].name:
 			#Save the character that was selected into the text event, which is in the timeline's file
@@ -164,9 +162,8 @@ func _on_Theme_pressed():
 #GET ALL THE CHARACTERS THAT CAN BE PICKED
 func get_themes():
 	var themes = []
-	var dir = Directory.new()
-	dir.open("res://teskan_data/dialogue/themes")
-	dir.list_dir_begin()
+	var dir = DirAccess.open("res://teskan_data/dialogue/themes")
+	dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 	
 	while true:
 		var file = dir.get_next()

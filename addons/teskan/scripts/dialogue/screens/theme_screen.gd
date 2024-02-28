@@ -1,7 +1,7 @@
-tool
+@tool
 extends Control
 
-onready var tree : Tree = self.get_node("../../MainTree")
+@onready var tree : Tree = self.get_parent().get_parent().get_node("MainTree")
 
 var characters = []
 var character_path : String
@@ -9,6 +9,9 @@ var character
 
 #LOAD THEME
 func _on_ThemeScreen_visibility_changed():
+	#if get_file():
+	#	return
+	
 	if self.visible == true && tree.get_selected():
 		var theme_file = get_file()
 		
@@ -26,6 +29,8 @@ func _on_ThemeScreen_visibility_changed():
 		$"%OutlineColour".color = theme_file.font_outline_colour
 		$"%NameBackgroundColour".color = theme_file.name_background_colour
 		$"%TextAccentColour".color = theme_file.text_accent_colour
+		
+		LoadPreview()
 		
 func _on_NameColourChanger_color_changed(color):
 	get_store_file('colour',color)
@@ -67,7 +72,13 @@ func _on_TextAccentColour_color_changed(color):
 	get_store_file('text_accent_colour',color)
 
 func _on_TextPreview_text_changed(new_text):
-	$'%DisplayText'.bbcode_text = new_text
+	update_text_preview(new_text)
+	
+func update_text_preview(new_text):
+	if new_text != null:
+		$'%DisplayText'.text = ("[outline_color=#"+ (get_file().font_outline_colour.to_html())+"]"+"[outline_size="+var_to_str(get_file().font_outline_size)+"]"+new_text+"[/outline_size]"+"[/outline_color]")
+	else:
+		$'%DisplayText'.text = ("[outline_color=#"+ (get_file().font_outline_colour.to_html())+"]"+"[outline_size="+var_to_str(get_file().font_outline_size)+"]"+$'%DisplayText'.text+"[/outline_size]"+"[/outline_color]")
 
 func _on_BackgroundMenu_file_selected(path):
 	$"%Background".text = $BackgroundMenu.current_path
@@ -86,56 +97,117 @@ func get_file():
 	return theme_file
 func get_store_file(property,value):
 	var theme_file = TDData.get_var("res://teskan_data/dialogue/themes/"+tree.get_selected().get_metadata(0))
+	#if property == 'font_outline_size':
+		#print(theme_file)
+	
 	theme_file[property] = value
+	#print("Storing theme file...")
 	TDData.store_var("res://teskan_data/dialogue/themes/"+tree.get_selected().get_metadata(0),theme_file)
+	#print("Storing theme file done!")
 	LoadPreview()
 
 func LoadPreview():
+	#print("Loading preview!")
+	
+	#print(get_file().font)
 		
-	var small_font = DynamicFont.new()
-	#var medium_font = DynamicFont.new()
-	#var large_font = DynamicFont.new()
+	update_text_preview(null)
+	
+	#var medium_font = FontFile.new()
+	#var large_font = FontFile.new()
 	
 		#CHARACTER
 	if character_path != null and character_path != '':
-		$'%DisplayText'.add_color_override("default_color",TDData.get_var(character_path).colour)
-		$'%NameLabel'.add_color_override("default_color",TDData.get_var(character_path).colour)
+		#print("Loading character...")
+		
+		$'%DisplayText'.add_theme_color_override("default_color",TDData.get_var(character_path).colour)
+		$'%NameLabel'.add_theme_color_override("default_color",TDData.get_var(character_path).colour)
 	
 		$'%NameStretcher'.text = " " + TDData.get_var(character_path).name + " "
 		$'%NameLabel'.text = " " + TDData.get_var(character_path).name + " "
-		if TDData.get_var(character_path).portraits['Default']:
+		
+		if TDData.get_var(character_path).portraits.has('Default'):
 			$'%PortraitBox'.texture = load(TDData.get_var(character_path).portraits['Default'])
-
+		
+		#print("Done loading character!")
 		#$'%'
 	
+	
 	#var font_path = get_file().font
-	
-	small_font.font_data = load(get_file().font)
-	small_font.outline_color = get_file().font_outline_colour
-	small_font.outline_size = get_file().font_outline_size
-	
-	var medium_font = small_font.duplicate()
-	var large_font = small_font.duplicate()
-		
-	small_font.size = get_file().small_font
-	medium_font.size = get_file().medium_font
-	large_font.size = get_file().large_font
-
-	
-	if small_font.size > 1000 or medium_font.size > 1000 or large_font.size > 1000:
-		print("ERROR: Font to large. May crash program.")
+	if get_file().font == "null":
+		#print("ERROR: theme_screen.gd 123: No font found.")
 		return
+		
+	#print("Loading font...")
+	
+	#var small_font : FontFile = load(get_file().font).duplicate()
+	#small_font.has_meta()
+	#print(get_file().font)
+	#small_font.set_embolden(0,get_file().font_outline_size)
+	#small_font.fixed_size = get_file().small_font
+	
+	#print("Font outline_colour: ",get_file().font_outline_colour)
+	#print(small_font.data)
+	#print("Font Embolden: ",small_font.get_embolden(0))
+	#small_font.data outline_color = get_file().font_outline_colour
+	#small_font.outline_size = get_file().font_outline_size
+	
+	#var medium_font : FontFile = load(get_file().font).duplicate()
+	#medium_font = load(get_file().font)
+	#medium_font.set_embolden(0,get_file().font_outline_size)
+	#medium_font.fixed_size = get_file().medium_font
+	
+	#var large_font : FontFile = load(get_file().font).duplicate()
+	#large_font = load(get_file().font)
+	#large_font.set_embolden(0,get_file().font_outline_size)
+	#large_font.fixed_size = get_file().large_font
+	
+	#print("Font Size: ", small_font.fixed_size)
+	
+	#if small_font.fixed_size > 1000 or medium_font.fixed_size > 1000 or large_font.fixed_size > 1000:
+		##print("ERROR: Font to large. May crash program.")
+	#	return
+		
+	#print("Done loading font!")
+	
+	#print("Loading textbox...")
 	
 	$'%NameBackground'.color = get_file().name_background_colour
-	$'%NameStretcher'.add_font_override("font",medium_font)
-	$'%NameLabel'.add_font_override("font",medium_font)
-	$'%DisplayText'.add_font_override("normal_font",medium_font)
-	$'%DisplayText'.add_font_override("italics_font",small_font)
-	$'%DisplayText'.add_font_override("bold_font",large_font)
+	
+	#$'%NameStretcher'.add_theme_color_override("font_color",)
+	$'%NameStretcher'.add_theme_font_override("font",load(get_file().font))
+	$'%NameStretcher'.add_theme_font_size_override("font_size",get_file().medium_font)
+	$'%NameStretcher'.add_theme_color_override("font_outline_color",get_file().font_outline_colour)
+	
+	$'%NameLabel'.add_theme_font_override("font",load(get_file().font))
+	$'%NameLabel'.add_theme_font_size_override("font_size",get_file().medium_font)
+	$'%NameLabel'.add_theme_color_override("font_outline_color",get_file().font_outline_colour)
+	#$'%NameLabel'.add_theme_font_override("font",get_file().font_outline_colour)
+	
+	$'%DisplayText'.add_theme_font_override("normal_font",load(get_file().font))
+	$'%DisplayText'.add_theme_font_size_override("normal_font_size",get_file().medium_font)
+	
+	$'%DisplayText'.add_theme_font_override("italics_font",load(get_file().font))
+	$'%DisplayText'.add_theme_font_size_override("italics_font_size",get_file().medium_font)
+	
+	$'%DisplayText'.add_theme_font_override("bold_font",load(get_file().font))
+	$'%DisplayText'.add_theme_font_size_override("bold_font_size",get_file().medium_font)
+	
+	#print("font_outline_colour ",get_file().font_outline_colour)
+	#$'%DisplayText'.add_theme_color_override("font_outline_color",get_file().font_outline_colour)
+	#$'%DisplayText'.add_theme_constant_override("outline_size",get_file().font_outline_size)
+	#$'%DisplayText'
+	
 	$'%TextAccent'.color = get_file().text_accent_colour
-	$'%DialogueBackground'.texture = load(get_file().background)
-	#$'%DialogueBackground'.rect_scale = Vector2(0.5,0.5)
+	
+	
+	if get_file().background != "null":
+		$'%DialogueBackground'.texture = load(get_file().background)
+		$'%DialogueBackground'.scale = Vector2(0.5,0.5)
 		#$'%NameLabel'
+	#print("Done loading textbox!")
+		
+	#print("Done loading preview")
 
 func _on_CharacterSelecter_pressed():
 	characters = get_characters()
@@ -145,12 +217,12 @@ func _on_CharacterSelecter_pressed():
 	
 	$PopupMenu.popup_centered(Vector2(800,800))
 
-	#print(self.get_node("%Character").text)
+	###print(self.get_node("%Character").text)
 #WHEN THE USER SELECTS A CHARACTER IN THE CHARACTER POP UP MENU, 
 #LOAD CHARACTER INTO THE EVENT
 func _on_PopupMenu_index_pressed(index):
-	var characters_in_tree = tree.get_root().get_children()
-	var current_tree_item_character = characters_in_tree.get_children()
+	var characters_in_tree = tree.get_root().get_child(0)
+	var current_tree_item_character = characters_in_tree.get_child(0)
 	var item_selected = tree.get_selected()
 	
 	#LOOP THROUGH ALL THE CHARACTERS IN THE TREE UNTIL I FIND THE ONE THAT WAS SELECTED IN THE POPUP MENU
@@ -158,6 +230,7 @@ func _on_PopupMenu_index_pressed(index):
 		#If the current character being iterated over is what we picked, save it
 		if current_tree_item_character.get_text(0) == characters[index].name:
 			#Save the character that was selected into the text event, which is in the timeline's file
+			#print("Checking for character file...")
 			var character_file = TDData.get_var("res://teskan_data/dialogue/characters/"+current_tree_item_character.get_metadata(0))
 			
 			#self.get_node('%CharacterName').text = character_file.name
@@ -170,15 +243,17 @@ func _on_PopupMenu_index_pressed(index):
 #GET ALL THE CHARACTERS THAT CAN BE PICKED
 func get_characters():
 	var characters = []
-	var dir = Directory.new()
-	dir.open("res://teskan_data/dialogue/characters")
-	dir.list_dir_begin()
+	#var dir = DirAccess.new()
+	var dir = DirAccess.open("res://teskan_data/dialogue/characters")
+	dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 	
 	while true:
 		var file = dir.get_next()
 		if file == "":
 			break
 		elif not file.begins_with("."):
+			#print("Checking for character file...")
+			
 			var character = TDData.get_var("res://teskan_data/dialogue/characters/"+file)
 			characters.append({'name' : character.name, 'path' : "res://teskan_data/dialogue/characters/"+file})
 			

@@ -1,4 +1,4 @@
-tool
+@tool
 extends TDEResource
 class_name TDEText
 
@@ -6,7 +6,7 @@ class_name TDEText
 var character : String
 var text : String
 
-func _init(input_type = "text", input_character = "No name", input_text = "No text"):
+func _init(input_type = "text",input_character = "No name",input_text = "No text"):
 	type = input_type
 	character = input_character
 	text = input_text
@@ -15,7 +15,7 @@ func _init(input_type = "text", input_character = "No name", input_text = "No te
 #of the array of it's parent resource
 func build(tree,tdetext,event_list):
 	var text_event_preset = load("res://addons/teskan/scenes/dialogue/presets/TextEvent.tscn")
-	var new_text_event_preset = text_event_preset.instance()
+	var new_text_event_preset = text_event_preset.instantiate()
 	event_list.add_child(new_text_event_preset)
 	
 	var timeline_resource = load("user://addons/teskan/data/dialogue/timelines/"+tree.get_selected().get_metadata(0))

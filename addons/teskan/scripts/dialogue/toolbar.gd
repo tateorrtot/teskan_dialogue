@@ -1,24 +1,30 @@
-tool
+@tool
 extends HBoxContainer
 
 #onready var dict = self.get_parent().get("tree_dict")
 
-onready var tree = self.get_parent().get_child(0)
-onready var root = tree.get_root()
+@onready var tree : Tree = self.get_parent().get_child(0)
+@onready var root : TreeItem = tree.get_root()
 	
-onready var characters_holder = root.get_children()
-onready var themes_holder = root.get_children().get_next()
-onready var timelines_holder = root.get_children().get_next().get_next()
-onready var variables_holder = root.get_children().get_next().get_next().get_next()
+@onready var characters_holder = root.get_child(0)
+@onready var themes_holder = root.get_child(1)
+@onready var timelines_holder = root.get_child(2)
+@onready var variables_holder = root.get_child(3)
 
-#onready var timestamp = OS.get_ticks_usec()
+#func _input(event):
+#	print(root.get_children())
+	
+
+
+
+#onready var timestamp = Time.get_ticks_usec()
 
 #onready var test_save = load("res://addons/teskan/scripts/dialogue/test_save.gd")
 
 
 
-#func _ready():
-	#yield(get_tree().create_timer(0.001),"timeout")
+
+	#await get_tree().create_timer(0.001).timeout
 	##var dict = self.get_parent().get_tree_dict()
 func _on_NewCharacter_pressed():
 	#var new_character = TDCharacter.new()
@@ -38,6 +44,26 @@ func _on_NewVariable_pressed():
 	new_tree_child.set_text(0, "New Variable")
 	new_tree_child.set_icon(0,load("res://addons/teskan/sprites/variable.png"))
 
+func _on_delete_selected_pressed():
+	var tree_item_selected = tree.get_selected()
+	if tree_item_selected == null:
+		return
+	
+	var tree_item_parent = tree.get_selected().get_parent()
+
+	match tree_item_parent:
+		characters_holder:
+			DirAccess.remove_absolute("res://teskan_data/dialogue/characters/"+tree_item_selected.get_metadata(0))
+			tree_item_selected.free()
+		themes_holder:
+			DirAccess.remove_absolute("res://teskan_data/dialogue/themes/"+tree_item_selected.get_metadata(0))
+			tree_item_selected.free()
+		timelines_holder:
+			DirAccess.remove_absolute("res://teskan_data/dialogue/timelines/"+tree_item_selected.get_metadata(0))
+			tree_item_selected.free()
+		variables_holder:
+			DirAccess.remove_absolute("res://teskan_data/dialogue/variables/"+tree_item_selected.get_metadata(0))
+			tree_item_selected.free()
 
 
 """func store_var(path,variable):
@@ -57,3 +83,6 @@ func get_var(path):
 	
 	return loaded_variable
 """
+
+
+

@@ -6,34 +6,34 @@
 
 [node name="ChoiceEvent" type="Control"]
 anchor_right = 1.0
-margin_bottom = 95.0
-rect_min_size = Vector2( 0, 95 )
+offset_bottom = 95.0
+custom_minimum_size = Vector2( 0, 95 )
 
 [node name="DeleteEvent" parent="." instance=ExtResource( 4 )]
 
 [node name="MoveEvent" parent="." instance=ExtResource( 3 )]
 
 [node name="EventDivider" parent="." instance=ExtResource( 1 )]
-margin_bottom = -23.095
+offset_bottom = -23.095
 
 [node name="Type" type="LineEdit" parent="."]
-margin_left = 68.0
-margin_top = 31.0
-margin_right = 168.0
-margin_bottom = 55.0
-rect_min_size = Vector2( 100, 0 )
+offset_left = 68.0
+offset_top = 31.0
+offset_right = 168.0
+offset_bottom = 55.0
+custom_minimum_size = Vector2( 100, 0 )
 text = "Exit"
 editable = false
 selecting_enabled = false
 
 [node name="Background" type="ColorRect" parent="."]
-margin_top = 55.0
-margin_right = 1920.0
-margin_bottom = 85.0
-rect_min_size = Vector2( 50, 30 )
+offset_top = 55.0
+offset_right = 1920.0
+offset_bottom = 85.0
+custom_minimum_size = Vector2( 50, 30 )
 color = Color( 0.588235, 0, 0, 1 )
 
 [node name="MainBody" type="HBoxContainer" parent="."]
 anchor_right = 1.0
-margin_top = 55.0
-margin_bottom = 85.0
+offset_top = 55.0
+offset_bottom = 85.0

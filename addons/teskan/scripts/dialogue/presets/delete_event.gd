@@ -1,4 +1,4 @@
-tool
+@tool
 extends Button
 
 func _on_DeleteEvent_pressed():

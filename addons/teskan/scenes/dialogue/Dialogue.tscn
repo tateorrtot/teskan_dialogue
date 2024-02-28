@@ -1,43 +1,58 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=4 format=3 uid="uid://dxo4gwqoj06v0"]
 
-[ext_resource path="res://addons/teskan/scripts/dialogue/main_tree.gd" type="Script" id=1]
-[ext_resource path="res://addons/teskan/scenes/dialogue/screens/Screens.tscn" type="PackedScene" id=2]
-[ext_resource path="res://addons/teskan/scenes/dialogue/Initializers.tscn" type="PackedScene" id=3]
+[ext_resource type="Script" path="res://addons/teskan/scripts/dialogue/main_tree.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://d3rslipb57n35" path="res://addons/teskan/scenes/dialogue/screens/Screens.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://is88wgmgmk1g" path="res://addons/teskan/scenes/dialogue/Initializers.tscn" id="3"]
 
 [node name="Dialogue" type="Control"]
+layout_mode = 3
 anchor_left = 0.004
 anchor_top = 0.053
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -0.0960002
-margin_top = 0.199999
-margin_right = -4.0
-margin_bottom = -4.0
+offset_left = -0.0960002
+offset_top = 0.199999
+offset_right = -4.0
+offset_bottom = -4.0
 
 [node name="MainTree" type="Tree" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.054
 anchor_right = 0.118
 anchor_bottom = 1.0
-margin_right = 0.111992
+offset_top = -0.00224304
+offset_right = -0.193085
+offset_bottom = 0.440002
 allow_rmb_select = true
 hide_root = true
-script = ExtResource( 1 )
+script = ExtResource("1")
 
-[node name="Toolbar" parent="." instance=ExtResource( 3 )]
+[node name="Toolbar" parent="." instance=ExtResource("3")]
+layout_mode = 0
+anchor_left = 0.0
+anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 0.044
-margin_left = 0.0159988
-margin_top = 0.308
-margin_right = 1.0
-margin_bottom = 0.183998
+offset_left = 0.0159988
+offset_top = 0.308
+offset_right = 1.0
+offset_bottom = 0.183998
 
-[node name="Screens" parent="." instance=ExtResource( 2 )]
+[node name="Screens" parent="." instance=ExtResource("2")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.119
+anchor_top = 0.054
+anchor_right = 1.002
+anchor_bottom = 1.004
+offset_left = 0.898483
+offset_top = -0.00224304
+offset_right = -0.232788
+offset_bottom = 0.365845
+grow_vertical = 1
 
 [node name="PopupMenu" type="PopupMenu" parent="."]
-anchor_right = 0.02
-anchor_bottom = 0.035
-margin_right = -0.320002
-margin_bottom = 0.26
 
 [connection signal="cell_selected" from="MainTree" to="Screens" method="_on_MainTree_cell_selected"]
-[connection signal="item_rmb_selected" from="MainTree" to="MainTree" method="_on_MainTree_item_rmb_selected"]
 [connection signal="index_pressed" from="PopupMenu" to="MainTree" method="_on_PopupMenu_index_pressed"]

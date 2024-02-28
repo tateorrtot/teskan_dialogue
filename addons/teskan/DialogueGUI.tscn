@@ -1,0 +1,133 @@
+[gd_scene load_steps=9 format=3 uid="uid://b88dmx3f1seru"]
+
+[ext_resource type="Script" path="res://addons/teskan/scripts/dialogue/random_pitch.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://drur7owugjxt5" path="res://icon.svg" id="2"]
+[ext_resource type="PackedScene" path="res://addons/teskan/BobbingKeyboardKey.tscn" id="4"]
+[ext_resource type="Texture2D" uid="uid://dks1b3r7l3qo6" path="res://addons/teskan/sprites/default_background.png" id="5"]
+[ext_resource type="Script" path="res://addons/teskan/scripts/dialogue/presets/dialogue_gui.gd" id="6"]
+[ext_resource type="PackedScene" path="res://addons/teskan/scenes/dialogue/presets/OptionButton.tscn" id="8"]
+[ext_resource type="Script" path="res://addons/teskan/scripts/dialogue/presets/choice_menu.gd" id="9"]
+[ext_resource type="PackedScene" uid="uid://dei082u1wpmfv" path="res://addons/teskan/scenes/dialogue/presets/NameStretcher.tscn" id="10"]
+
+[node name="DialogueGUI" type="CanvasLayer"]
+script = ExtResource("6")
+
+[node name="ExitTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="WaitTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="TextTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="SpeakTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="Voice" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+volume_db = -23.597
+script = ExtResource("1")
+
+[node name="GuiControl" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 310.0
+offset_top = 730.0
+offset_right = 1610.0
+offset_bottom = 1080.0
+
+[node name="DialogueBackground" type="TextureRect" parent="GuiControl"]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = -0.102
+anchor_top = 0.246
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -0.399994
+offset_top = -0.100006
+texture = ExtResource("5")
+expand_mode = 1
+
+[node name="NameStretcher" parent="GuiControl" instance=ExtResource("10")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_bottom = 23.0
+
+[node name="PortraitBox" type="TextureRect" parent="GuiControl"]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = -0.078
+anchor_top = -0.074
+anchor_right = 0.19
+anchor_bottom = 0.923
+offset_left = -0.599998
+offset_top = -0.0999851
+offset_bottom = 0.950012
+texture = ExtResource("2")
+expand_mode = 1
+
+[node name="TextAccent" type="ColorRect" parent="GuiControl"]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 0.208
+anchor_top = 0.297
+anchor_right = 0.967
+anchor_bottom = 0.922
+offset_left = 0.399994
+offset_top = -0.0400085
+offset_right = 9.59998
+offset_bottom = -0.0400085
+color = Color(0, 0, 0, 0.392157)
+
+[node name="DisplayText" type="RichTextLabel" parent="GuiControl/TextAccent"]
+unique_name_in_owner = true
+clip_contents = false
+layout_mode = 0
+anchor_left = 0.011
+anchor_top = 0.069
+anchor_right = 0.989
+anchor_bottom = 1.0
+offset_left = 0.0450993
+offset_top = -0.09375
+offset_right = 0.0549316
+offset_bottom = 0.250015
+bbcode_enabled = true
+text = "Hi! This is the default text with BIG and small text. Give it a TRY!
+(Line breaks also work, PS this uses BBCode!)"
+scroll_following = true
+
+[node name="PopupMenu" type="PopupMenu" parent="."]
+hide_on_item_selection = false
+hide_on_checkable_item_selection = false
+
+[node name="ChoiceMenu" type="VBoxContainer" parent="."]
+anchors_preset = -1
+anchor_left = 0.625
+anchor_top = 0.833
+anchor_right = 0.781
+anchor_bottom = 0.88
+offset_top = 0.359924
+offset_right = 0.47998
+offset_bottom = -0.400085
+script = ExtResource("9")
+
+[node name="OptionButton" parent="ChoiceMenu" instance=ExtResource("8")]
+visible = false
+layout_mode = 2
+
+[node name="Scripts" type="Node" parent="."]
+
+[node name="ArrowKey" parent="." instance=ExtResource("4")]
+position = Vector2(1578, 1041)
+scale = Vector2(3, 3)

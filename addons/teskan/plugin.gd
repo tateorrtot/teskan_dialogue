@@ -1,4 +1,4 @@
-tool
+@tool
 extends EditorPlugin
 
 
@@ -9,47 +9,50 @@ var main_panel_instance
 
 func _enter_tree():
 	add_custom_type("TimelinePlayer", "Node", load("res://addons/teskan/scripts/dialogue/timeline_player.gd"), load("res://addons/teskan/sprites/timeline.png"))
+	#add_custom_type("SceneChanger", "Area2D", load("res://addons/teskan/scripts/dialogue/scene_changer.gd"), load("res://addons/teskan/sprites/door.png"))
 	#add_custom_type("TestSave","Resource",preload("res://addons/teskan/scripts/dialogue/test_save.gd"),preload("res://addons/teskan/sprites/main_menu_icon.png"))
+	#add_custom_type("Wasp", "CharacterBody2D", load("res://addons/teskan/scripts/enemies/wasp.gd"), load("res://addons/teskan/sprites/door.png"))
 	
-	main_panel_instance = MainPanel.instance()
+	main_panel_instance = MainPanel.instantiate()
 	# Add the main panel to the editor's main viewport.
-	get_editor_interface().get_editor_viewport().add_child(main_panel_instance)
+	get_editor_interface().get_editor_main_screen().add_child(main_panel_instance)
 	# Hide the main panel. Very much required.
-	make_visible(false)
+	_make_visible(false)
+	
+	
 
-	if not Directory.new().dir_exists("res://teskan_data"): # open("res://teskan_data"):
-		Directory.new().make_dir("res://teskan_data")
-		Directory.new().make_dir("res://teskan_data/dialogue")
-		Directory.new().make_dir("res://teskan_data/dialogue/characters")
-		Directory.new().make_dir("res://teskan_data/dialogue/characters")
-		Directory.new().make_dir("res://teskan_data/dialogue/themes")
-		Directory.new().make_dir("res://teskan_data/dialogue/timelines")
-		Directory.new().make_dir("res://teskan_data/dialogue/variables")
+	if not DirAccess.dir_exists_absolute("res://teskan_data"): # open("res://teskan_data"):
+		DirAccess.make_dir_absolute("res://teskan_data")
+		DirAccess.make_dir_absolute("res://teskan_data/dialogue")
+		DirAccess.make_dir_absolute("res://teskan_data/dialogue/characters")
+		DirAccess.make_dir_absolute("res://teskan_data/dialogue/characters")
+		DirAccess.make_dir_absolute("res://teskan_data/dialogue/themes")
+		DirAccess.make_dir_absolute("res://teskan_data/dialogue/timelines")
+		DirAccess.make_dir_absolute("res://teskan_data/dialogue/variables")
 
 
 
 func _exit_tree():
 	remove_custom_type("TimelinePlayer")
-	#remove_custom_type("TestSave")
 	
 	if main_panel_instance:
 		main_panel_instance.queue_free()
 
 
-func has_main_screen():
+func _has_main_screen():
 	return true
 
 
-func make_visible(visible):
+func _make_visible(visible):
 	if main_panel_instance:
 		main_panel_instance.visible = visible
 
 
-func get_plugin_name():
+func _get_plugin_name():
 	return "Teskan"
 
 
-func get_plugin_icon():
-	# Must return some kind of Texture for the icon.
+func _get_plugin_icon():
+	# Must return some kind of Texture2D for the icon.
 	return preload("res://addons/teskan/sprites/main_menu_icon.png")
 	#return get_editor_interface().get_base_control().get_icon("Node", "EditorIcons")
