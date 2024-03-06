@@ -1,18 +1,18 @@
 [gd_scene load_steps=4 format=3 uid="uid://dbaojk4j1hdbt"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_3a5c2"]
-[ext_resource type="PackedScene" uid="uid://b88dmx3f1seru" path="res://addons/teskan/DialogueGUI.tscn" id="2_din3m"]
+[ext_resource type="PackedScene" uid="uid://beausstv1wra7" path="res://addons/teskan/DialogueGUI.tscn" id="2_din3m"]
 [ext_resource type="Script" path="res://dialogue_input.gd" id="3_ov05i"]
 
 [node name="Node2D" type="Node2D" node_paths=PackedStringArray("gui")]
 script = ExtResource("1_3a5c2")
 gui = NodePath("DialogueGUI")
 
-[node name="DialogueGUI" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_din3m")]
-player = NodePath("../DialogueInput")
-
 [node name="DialogueInput" type="Node" parent="." node_paths=PackedStringArray("interact_cooldown")]
 script = ExtResource("3_ov05i")
 interact_cooldown = NodePath("InteractCooldown")
 
 [node name="InteractCooldown" type="Timer" parent="DialogueInput"]
+
+[node name="DialogueGUI" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_din3m")]
+player = NodePath("../DialogueInput")

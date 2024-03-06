@@ -8,15 +8,14 @@ signal selected(portrait_path)
 
 #DELETE PORTRAIT ENTRY
 func _on_PortraitDelete_pressed():
-	if portrait_list.get_child_count() > 1:
-		var item_selected = tree.get_selected()
-		var character_file = TDData.get_var("res://teskan_data/dialogue/characters/"+item_selected.get_metadata(0))
-		character_file.portraits.erase($PortraitName.text)
-		TDData.store_var("res://teskan_data/dialogue/characters/"+item_selected.get_metadata(0),character_file)
-		
-		##print(TDData.get_var("res://teskan_data/dialogue/characters/"+item_selected.get_metadata(0)).portraits)
+	var item_selected = tree.get_selected()
+	var character_file = TDData.get_var("res://teskan_data/dialogue/characters/"+item_selected.get_metadata(0))
+	character_file.portraits.erase($PortraitName.text)
+	TDData.store_var("res://teskan_data/dialogue/characters/"+item_selected.get_metadata(0),character_file)
+	
+	##print(TDData.get_var("res://teskan_data/dialogue/characters/"+item_selected.get_metadata(0)).portraits)
 
-		self.queue_free()
+	self.queue_free()
 
 #POPUP THE MENU FOR FINDING THE FILE PATH
 func _on_PortraitFindPath_pressed():

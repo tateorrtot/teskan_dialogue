@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/fritz2.wav-5b7f5f73f61c1d9864a41e06e1646ff2.sample"
+type="AudioStreamWAV"
+uid="uid://c6uq61tl55g08"
+path="res://.godot/imported/fritz2.wav-5b7f5f73f61c1d9864a41e06e1646ff2.sample"
 
 [deps]
 
 source_file="res://Testing/fritz2.wav"
-dest_files=[ "res://.import/fritz2.wav-5b7f5f73f61c1d9864a41e06e1646ff2.sample" ]
+dest_files=["res://.godot/imported/fritz2.wav-5b7f5f73f61c1d9864a41e06e1646ff2.sample"]
 
 [params]
 

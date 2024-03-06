@@ -1,9 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://dkt54867q0fun"]
+[gd_scene load_steps=4 format=3 uid="uid://dkt54867q0fun"]
 
 [ext_resource type="Script" path="res://addons/teskan/scripts/dialogue/screens/theme_screen.gd" id="1"]
-[ext_resource type="Texture2D" uid="uid://dks1b3r7l3qo6" path="res://addons/teskan/sprites/default_background.png" id="2"]
-[ext_resource type="PackedScene" uid="uid://dei082u1wpmfv" path="res://addons/teskan/scenes/dialogue/presets/NameStretcher.tscn" id="4_8p1fv"]
-[ext_resource type="Texture2D" uid="uid://drur7owugjxt5" path="res://icon.svg" id="5_b4ctj"]
+[ext_resource type="PackedScene" uid="uid://ywmg5lieme5h" path="res://addons/teskan/scenes/dialogue/presets/DialogueBox.tscn" id="3_2hkyt"]
 [ext_resource type="Texture2D" uid="uid://p6eievb4ko8y" path="res://addons/teskan/sprites/character.png" id="6"]
 
 [node name="ThemeScreen" type="Control"]
@@ -17,9 +15,12 @@ script = ExtResource("1")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 custom_minimum_size = Vector2(512, 0)
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Pickers" type="VBoxContainer" parent="ScrollContainer"]
 layout_mode = 2
@@ -226,112 +227,33 @@ filters = PackedStringArray("*.png", "*.wpeg", "*.jpg", "*.jpeg", "*.pdf", "*.gi
 [node name="CharacterSelecter" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.008
-anchor_top = 0.461
-anchor_right = 0.02
-anchor_bottom = 0.491
-offset_left = -0.360001
-offset_top = 0.119965
-offset_right = 0.599998
-offset_bottom = -0.280029
+offset_left = 15.0
+offset_top = 498.0
+offset_right = 39.0
+offset_bottom = 530.0
 icon = ExtResource("6")
 
 [node name="TextPreview" type="LineEdit" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.024
-anchor_top = 0.461
-anchor_right = 0.447
-anchor_bottom = 0.491
-offset_left = -26.08
-offset_top = 113.12
-offset_right = -26.2401
-offset_bottom = 112.72
+offset_left = 43.0
+offset_top = 499.0
+offset_right = 855.0
+offset_bottom = 531.0
 text = "[rainbow freq=1 sat=10 val=20]Hi![/rainbow] This is the [color=#c9c8d9]default[/color] text with [b]BIG[/b] and [i]small[/i] text. Give it a [wave amp=50freq=2][color=#000000]TRY![/color][/wave] [i]this uses BBCode!)[/i]"
 
-[node name="GuiControl" type="Control" parent="."]
+[node name="DialogueGUI" parent="." instance=ExtResource("3_2hkyt")]
 layout_mode = 1
-anchor_left = 0.067
-anchor_top = 0.281
-anchor_right = 0.635
-anchor_bottom = 0.554
-offset_left = -0.639984
-offset_top = 0.519989
-offset_right = 208.8
-offset_bottom = 55.68
-scale = Vector2(0.840001, 0.840001)
-
-[node name="DialogueBackground" type="TextureRect" parent="GuiControl"]
-unique_name_in_owner = true
-layout_mode = 0
-anchor_left = -0.102
-anchor_top = 0.246
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -0.399994
-offset_top = -0.100006
-texture = ExtResource("2")
-expand_mode = 1
-
-[node name="NameStretcher" parent="GuiControl" instance=ExtResource("4_8p1fv")]
-layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 0.0
-offset_top = 0.0
-offset_bottom = 23.0
-
-[node name="PortraitBox" type="TextureRect" parent="GuiControl"]
-unique_name_in_owner = true
-layout_mode = 0
-anchor_left = -0.078
-anchor_top = -0.074
-anchor_right = 0.19
-anchor_bottom = 0.923
-offset_left = -0.599998
-offset_top = -0.0999851
-offset_right = 1.0
-offset_bottom = 0.950012
-texture = ExtResource("5_b4ctj")
-expand_mode = 1
-
-[node name="TextAccent" type="ColorRect" parent="GuiControl"]
-unique_name_in_owner = true
-layout_mode = 0
-anchor_left = 0.208
-anchor_top = 0.297
-anchor_right = 0.967
-anchor_bottom = 0.922
-offset_left = 0.399994
-offset_top = -0.0400085
-offset_right = 9.59998
-offset_bottom = -0.0400085
-color = Color(0, 0, 0, 0.392157)
-
-[node name="DisplayText" type="RichTextLabel" parent="GuiControl/TextAccent"]
-unique_name_in_owner = true
-clip_contents = false
-layout_mode = 0
-anchor_left = 0.011
-anchor_top = 0.069
-anchor_right = 0.989
-anchor_bottom = 1.0
-offset_left = 0.0450993
-offset_top = -0.09375
-offset_right = 0.0549316
-offset_bottom = 0.250015
-bbcode_enabled = true
-text = "Hi! This is the default text with BIG and small text. Give it a TRY!
-(Line breaks also work, PS this uses BBCode!)"
-scroll_following = true
-
-[node name="Control" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 72.0
+offset_top = 284.0
+offset_right = 1492.0
+offset_bottom = 684.0
+scale = Vector2(0.5, 0.5)
 
 [connection signal="visibility_changed" from="." to="." method="_on_ThemeScreen_visibility_changed"]
 [connection signal="color_changed" from="ScrollContainer/Pickers/NameColour/NameColourChanger" to="." method="_on_NameColourChanger_color_changed"]

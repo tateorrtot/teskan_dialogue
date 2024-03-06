@@ -1,0 +1,85 @@
+[gd_scene load_steps=4 format=3 uid="uid://ywmg5lieme5h"]
+
+[ext_resource type="Texture2D" uid="uid://blg1s10gqohsp" path="res://DefaultBackground.png" id="1_k1bl0"]
+[ext_resource type="Texture2D" uid="uid://drur7owugjxt5" path="res://icon.svg" id="2_f3ick"]
+[ext_resource type="PackedScene" uid="uid://dei082u1wpmfv" path="res://addons/teskan/scenes/dialogue/presets/NameStretcher.tscn" id="3_tardp"]
+
+[node name="DialogueGUI" type="Control"]
+layout_mode = 3
+anchor_left = 0.13
+anchor_top = 0.63
+anchor_right = 0.87
+anchor_bottom = 1.0
+offset_left = 0.399979
+offset_top = -0.400085
+offset_right = -0.400146
+
+[node name="DialogueBackground" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.25
+anchor_bottom = 0.25
+offset_right = 1420.0
+offset_bottom = 300.0
+texture = ExtResource("1_k1bl0")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="PortraitBox" type="TextureRect" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.018
+anchor_top = 0.062
+anchor_right = 0.264
+anchor_bottom = 0.937
+offset_left = -0.559994
+offset_top = 0.199997
+offset_right = 0.119995
+offset_bottom = 0.199982
+texture = ExtResource("2_f3ick")
+expand_mode = 1
+
+[node name="TextAccent" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.014
+anchor_top = 0.312
+anchor_right = 0.986
+anchor_bottom = 0.937
+offset_left = 0.119999
+offset_top = 0.199997
+offset_right = -0.120117
+offset_bottom = 0.199982
+color = Color(0, 0, 0, 0.392157)
+
+[node name="DisplayText" type="RichTextLabel" parent="TextAccent"]
+unique_name_in_owner = true
+clip_contents = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.011
+anchor_top = 0.069
+anchor_right = 0.989
+anchor_bottom = 1.0
+offset_left = 0.0450993
+offset_top = -0.09375
+offset_right = 0.0549316
+offset_bottom = 0.250015
+bbcode_enabled = true
+text = "Hi! This is the default text with BIG and small text. Give it a TRY!
+(Line breaks also work, PS this uses BBCode!)"
+scroll_following = true
+
+[node name="NameStretcher" parent="." instance=ExtResource("3_tardp")]
+layout_mode = 1
+anchor_left = 0.014
+anchor_right = 0.049
+anchor_bottom = 0.25
+offset_left = 0.119999
+offset_right = 0.419998
+offset_bottom = 0.0
+vertical_alignment = 1

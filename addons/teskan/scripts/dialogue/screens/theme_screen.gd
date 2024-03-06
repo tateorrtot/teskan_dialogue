@@ -3,6 +3,15 @@ extends Control
 
 @onready var tree : Tree = self.get_parent().get_parent().get_node("MainTree")
 
+@onready var dialogue_gui : Control = $DialogueGUI
+@onready var portrait_box : TextureRect = $DialogueGUI/PortraitBox 
+@onready var dialogue_background : TextureRect = $DialogueGUI/DialogueBackground
+@onready var name_stretcher : Label = $DialogueGUI/NameStretcher
+@onready var name_label : Label = $DialogueGUI/NameStretcher/NameLabel
+@onready var name_background : ColorRect = $DialogueGUI/NameStretcher/NameBackground
+@onready var text_accent : ColorRect = $DialogueGUI/TextAccent
+@onready var display_text : RichTextLabel = $DialogueGUI/TextAccent/DisplayText
+
 var characters = []
 var character_path : String
 var character
@@ -76,9 +85,9 @@ func _on_TextPreview_text_changed(new_text):
 	
 func update_text_preview(new_text):
 	if new_text != null:
-		$'%DisplayText'.text = ("[outline_color=#"+ (get_file().font_outline_colour.to_html())+"]"+"[outline_size="+var_to_str(get_file().font_outline_size)+"]"+new_text+"[/outline_size]"+"[/outline_color]")
+		display_text.text = ("[outline_color=#"+ (get_file().font_outline_colour.to_html())+"]"+"[outline_size="+var_to_str(get_file().font_outline_size)+"]"+new_text+"[/outline_size]"+"[/outline_color]")
 	else:
-		$'%DisplayText'.text = ("[outline_color=#"+ (get_file().font_outline_colour.to_html())+"]"+"[outline_size="+var_to_str(get_file().font_outline_size)+"]"+$'%DisplayText'.text+"[/outline_size]"+"[/outline_color]")
+		display_text.text = ("[outline_color=#"+ (get_file().font_outline_colour.to_html())+"]"+"[outline_size="+var_to_str(get_file().font_outline_size)+"]"+display_text.text+"[/outline_size]"+"[/outline_color]")
 
 func _on_BackgroundMenu_file_selected(path):
 	$"%Background".text = $BackgroundMenu.current_path
@@ -109,6 +118,7 @@ func get_store_file(property,value):
 func LoadPreview():
 	#print("Loading preview!")
 	
+	
 	#print(get_file().font)
 		
 	update_text_preview(null)
@@ -120,14 +130,14 @@ func LoadPreview():
 	if character_path != null and character_path != '':
 		#print("Loading character...")
 		
-		$'%DisplayText'.add_theme_color_override("default_color",TDData.get_var(character_path).colour)
-		$'%NameLabel'.add_theme_color_override("default_color",TDData.get_var(character_path).colour)
+		display_text.add_theme_color_override("default_color",TDData.get_var(character_path).colour)
+		name_label.add_theme_color_override("default_color",TDData.get_var(character_path).colour)
 	
-		$'%NameStretcher'.text = " " + TDData.get_var(character_path).name + " "
-		$'%NameLabel'.text = " " + TDData.get_var(character_path).name + " "
+		name_stretcher.text = " " + TDData.get_var(character_path).name + " "
+		name_label.text = " " + TDData.get_var(character_path).name + " "
 		
 		if TDData.get_var(character_path).portraits.has('Default'):
-			$'%PortraitBox'.texture = load(TDData.get_var(character_path).portraits['Default'])
+			portrait_box.texture = load(TDData.get_var(character_path).portraits['Default'])
 		
 		#print("Done loading character!")
 		#$'%'
@@ -172,38 +182,33 @@ func LoadPreview():
 	
 	#print("Loading textbox...")
 	
-	$'%NameBackground'.color = get_file().name_background_colour
+	name_background.color = get_file().name_background_colour
 	
 	#$'%NameStretcher'.add_theme_color_override("font_color",)
-	$'%NameStretcher'.add_theme_font_override("font",load(get_file().font))
-	$'%NameStretcher'.add_theme_font_size_override("font_size",get_file().medium_font)
-	$'%NameStretcher'.add_theme_color_override("font_outline_color",get_file().font_outline_colour)
+	name_stretcher.add_theme_font_override("font",load(get_file().font))
+	name_stretcher.add_theme_font_size_override("font_size",get_file().medium_font)
+	name_stretcher.add_theme_color_override("font_outline_color",get_file().font_outline_colour)
 	
-	$'%NameLabel'.add_theme_font_override("font",load(get_file().font))
-	$'%NameLabel'.add_theme_font_size_override("font_size",get_file().medium_font)
-	$'%NameLabel'.add_theme_color_override("font_outline_color",get_file().font_outline_colour)
+	name_label.add_theme_font_override("font",load(get_file().font))
+	name_label.add_theme_font_size_override("font_size",get_file().medium_font)
+	name_label.add_theme_color_override("font_outline_color",get_file().font_outline_colour)
 	#$'%NameLabel'.add_theme_font_override("font",get_file().font_outline_colour)
 	
-	$'%DisplayText'.add_theme_font_override("normal_font",load(get_file().font))
-	$'%DisplayText'.add_theme_font_size_override("normal_font_size",get_file().medium_font)
+	display_text.add_theme_font_override("normal_font",load(get_file().font))
+	display_text.add_theme_font_size_override("normal_font_size",get_file().medium_font)
 	
-	$'%DisplayText'.add_theme_font_override("italics_font",load(get_file().font))
-	$'%DisplayText'.add_theme_font_size_override("italics_font_size",get_file().medium_font)
+	display_text.add_theme_font_override("italics_font",load(get_file().font))
+	display_text.add_theme_font_size_override("italics_font_size",get_file().medium_font)
 	
-	$'%DisplayText'.add_theme_font_override("bold_font",load(get_file().font))
-	$'%DisplayText'.add_theme_font_size_override("bold_font_size",get_file().medium_font)
+	display_text.add_theme_font_override("bold_font",load(get_file().font))
+	display_text.add_theme_font_size_override("bold_font_size",get_file().medium_font)
 	
-	#print("font_outline_colour ",get_file().font_outline_colour)
-	#$'%DisplayText'.add_theme_color_override("font_outline_color",get_file().font_outline_colour)
-	#$'%DisplayText'.add_theme_constant_override("outline_size",get_file().font_outline_size)
-	#$'%DisplayText'
-	
-	$'%TextAccent'.color = get_file().text_accent_colour
+	text_accent.color = get_file().text_accent_colour
 	
 	
 	if get_file().background != "null":
-		$'%DialogueBackground'.texture = load(get_file().background)
-		$'%DialogueBackground'.scale = Vector2(0.5,0.5)
+		dialogue_background.texture = load(get_file().background)
+		#dialogue_background.scale = Vector2(0.5,0.5)
 		#$'%NameLabel'
 	#print("Done loading textbox!")
 		

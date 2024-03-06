@@ -9,14 +9,22 @@ signal event_finished()
 ## Must have a signal for
 @export var player : Node #= self.get_node('../Player')
 
-@export var name_stretcher_with_portrait_pos := Vector2(247,9)
-@export var text_box_with_portrait_pos := Vector2(270.8,103.91)
-@export var text_box_with_portrait_size := Vector2(995.9,218.75)
+@export var name_stretcher_with_portrait_pos := Vector2(400,0)
+@export var text_box_with_portrait_pos := Vector2(400,125)
+@export var text_box_with_portrait_size := Vector2(1000,250)
 
-@export var name_stretcher_no_portrait_pos := Vector2(-102,9)
-@export var text_box_no_portrait_pos := Vector2(-100,103.91)
-@export var text_box_no_portrait_size := Vector2(1370,218.75)
+@export var name_stretcher_no_portrait_pos := Vector2(20,0)
+@export var text_box_no_portrait_pos := Vector2(20,125)
+@export var text_box_no_portrait_size := Vector2(1380,250)
 
+@onready var dialogue_box : Control = $DialogueBox
+@onready var portrait_box : TextureRect = $DialogueBox/PortraitBox 
+@onready var dialogue_background : TextureRect = $DialogueBox/DialogueBackground
+@onready var name_stretcher : Label = $DialogueBox/NameStretcher
+@onready var name_label : Label = $DialogueBox/NameStretcher/NameLabel
+@onready var name_background : ColorRect = $DialogueBox/NameStretcher/NameBackground
+@onready var text_accent : ColorRect = $DialogueBox/TextAccent
+@onready var display_text : RichTextLabel = $DialogueBox/TextAccent/DisplayText
 #onready var display_text = self.get_node("%DisplayText")
 #onready var name_label = self.get_node("%NameLabel")
 #onready var portrait_box = self.get_node("%PortraitBox")
@@ -54,7 +62,7 @@ func play_timeline(timeline_name):
 func skip_event():
 	#SKIP TEXT EVENT
 	if self.visible == true and is_event_finished == false:
-		$'%DisplayText'.visible_characters = $'%DisplayText'.text.length()
+		display_text.visible_characters = display_text.text.length()
 		
 	#$'%DisplayText'.visible_characters = $'%DisplayText'.text.length()
 	
@@ -65,8 +73,6 @@ func play_timeline_helper(events, loop_completed_emiter : Node = null):
 	
 	for event in events:
 		is_event_finished = false
-		
-		print("next!")
 		
 		if event.type == 'text':
 			var character = TDData.get_var(event.character_path)
@@ -194,19 +200,19 @@ func play_timeline_helper(events, loop_completed_emiter : Node = null):
 func speak(character,text):
 	visible = true
 	
-	$'%DisplayText'.text = text
-	$'%DisplayText'.visible_characters = 0
+	display_text.text = text
+	display_text.visible_characters = 0
 	#$'%NameLabel'.text = character.name
 	
 	#while display_text.visible_characters <= display_text.text.length():
 	while true:
 		#print("Speaking...")
 		
-		$'%DisplayText'.visible_characters += 1
+		display_text.visible_characters += 1
 		$'%SpeakTimer'.start(character.voice_speed * VOICE_SPEED_MULTIPLIER)
 		#$'SpeakTimer'.start(1)
 		
-		if not $'%DisplayText'.text[$'%DisplayText'.visible_characters - 1] == " ":
+		if not display_text.text[display_text.visible_characters - 1] == " ":
 			$'%Voice'.speak_voice(load(character.voice),character.voice_pitch_min,character.voice_pitch_max)
 		
 		#print("About to await! ",$'%SpeakTimer'.time_left)
@@ -214,7 +220,7 @@ func speak(character,text):
 		await  $'%SpeakTimer'.timeout
 		#print("Done waiting.")
 		
-		if self.visible == false || $'%DisplayText'.visible_characters == $'%DisplayText'.text.length():
+		if self.visible == false || display_text.visible_characters == display_text.text.length():
 			#print("BREAK!")
 			break
 	
@@ -233,6 +239,7 @@ func string_slicer(string : String):
 			new_string += s
 	return new_string
 
+
 func load_theme(character,portrait):
 	# print("char theme: ",character.theme)
 	if TDData.get_var(character.theme) == null:
@@ -248,33 +255,33 @@ func load_theme(character,portrait):
 	#var large_font = FontFile.new()
 	
 
-	if $GuiControl.has_node("NameStretcher2"):
-		$GuiControl.get_node("NameStretcher2").queue_free()
+	if dialogue_box.has_node("NameStretcher2"):
+		dialogue_box.get_node("NameStretcher2").queue_free()
 	else:
-		$GuiControl.get_node("NameStretcher").queue_free()
+		dialogue_box.get_node("NameStretcher").queue_free()
 	#$GuiControl.remove_child($'%NameStretcher')
 	var new_name_stretcher = load("res://addons/teskan/scenes/dialogue/presets/NameStretcher.tscn").instantiate()
 	
-	$GuiControl.add_child(new_name_stretcher,true)
+	dialogue_box.add_child(new_name_stretcher,true)
 	
 	
 	#CHARACTER
-	$'%DisplayText'.add_theme_color_override("default_color",character.colour)
+	display_text.add_theme_color_override("default_color",character.colour)
 	new_name_stretcher.get_node('NameLabel').add_theme_color_override("font_color",character.colour)
 	
 	
 	new_name_stretcher.text = " " + character.name + " "
 	new_name_stretcher.get_node('NameLabel').text = " " + character.name + " "
 	if character.portraits.has("Default"):
-		$'%PortraitBox'.texture = load(character.portraits[portrait])
+		portrait_box.texture = load(character.portraits[portrait])
 		new_name_stretcher.position = name_stretcher_with_portrait_pos
-		$'%TextAccent'.position = text_box_with_portrait_pos
-		$'%TextAccent'.size = text_box_with_portrait_size
+		text_accent.position = text_box_with_portrait_pos
+		text_accent.size = text_box_with_portrait_size
 	else:
-		$'%PortraitBox'.texture = null
+		portrait_box.texture = null
 		new_name_stretcher.position = name_stretcher_no_portrait_pos
-		$'%TextAccent'.position = text_box_no_portrait_pos
-		$'%TextAccent'.size = text_box_no_portrait_size
+		text_accent.position = text_box_no_portrait_pos
+		text_accent.size = text_box_no_portrait_size
 	
 	#var font_path = get_file().font
 	
@@ -300,16 +307,16 @@ func load_theme(character,portrait):
 	new_name_stretcher.get_node('NameBackground').color = theme.name_background_colour
 	new_name_stretcher.add_theme_font_override("font",medium_font)
 	new_name_stretcher.get_node('NameLabel').add_theme_font_override("font",medium_font)
-	$'%DisplayText'.add_theme_font_override("normal_font",medium_font)
-	$'%DisplayText'.add_theme_font_override("italics_font",small_font)
-	$'%DisplayText'.add_theme_font_override("bold_font",large_font)
-	$'%TextAccent'.color = theme.text_accent_colour
+	display_text.add_theme_font_override("normal_font",medium_font)
+	display_text.add_theme_font_override("italics_font",small_font)
+	display_text.add_theme_font_override("bold_font",large_font)
+	text_accent.color = theme.text_accent_colour
 	
 	new_name_stretcher.get_node('NameLabel').add_theme_color_override("font_outline_color",theme.font_outline_colour)
-	$'%DisplayText'.add_theme_color_override("font_outline_color",theme.font_outline_colour)
+	display_text.add_theme_color_override("font_outline_color",theme.font_outline_colour)
 	
 	if (theme.background) != "null":
-		$'%DialogueBackground'.texture = load(theme.background)
+		dialogue_background.texture = load(theme.background)
 	#$'%DialogueBackground'.scale = Vector2(0.5,0.5)
 		#$'%NameLabel'
 		

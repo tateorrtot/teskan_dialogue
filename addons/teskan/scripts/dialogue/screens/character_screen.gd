@@ -59,6 +59,10 @@ func _on_CharacterScreen_visibility_changed():
 			if loaded_preview == false:
 				loaded_preview = true
 				portrait_preview.texture = load(character_file.portraits[portrait])
+				
+		
+		if character_file.portraits.size() == 0:
+			portrait_preview.texture = null
 		
 #CHANGE NAME
 func _on_NamePicker_text_entered(new_text):
