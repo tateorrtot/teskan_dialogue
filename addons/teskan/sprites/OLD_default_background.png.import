@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://blg1s10gqohsp"
-path="res://.godot/imported/DefaultBackground.png-3f880755237519663a308f66f6a0e618.ctex"
+uid="uid://dks1b3r7l3qo6"
+path="res://.godot/imported/OLD_default_background.png-0a58872db049857aca1b13aa73317c39.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://DefaultBackground.png"
-dest_files=["res://.godot/imported/DefaultBackground.png-3f880755237519663a308f66f6a0e618.ctex"]
+source_file="res://addons/teskan/sprites/OLD_default_background.png"
+dest_files=["res://.godot/imported/OLD_default_background.png-0a58872db049857aca1b13aa73317c39.ctex"]
 
 [params]
 

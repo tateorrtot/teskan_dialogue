@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://addons/teskan/scripts/dialogue/random_pitch.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://drur7owugjxt5" path="res://icon.svg" id="2"]
 [ext_resource type="PackedScene" path="res://addons/teskan/BobbingKeyboardKey.tscn" id="4"]
-[ext_resource type="Texture2D" uid="uid://dks1b3r7l3qo6" path="res://addons/teskan/sprites/default_background.png" id="5"]
+[ext_resource type="Texture2D" uid="uid://dks1b3r7l3qo6" path="res://addons/teskan/sprites/OLD_default_background.png" id="5"]
 [ext_resource type="Script" path="res://addons/teskan/scripts/dialogue/presets/dialogue_gui.gd" id="6"]
 [ext_resource type="PackedScene" path="res://addons/teskan/scenes/dialogue/presets/OptionButton.tscn" id="8"]
 [ext_resource type="Script" path="res://addons/teskan/scripts/dialogue/presets/choice_menu.gd" id="9"]
@@ -56,12 +56,9 @@ expand_mode = 1
 [node name="NameStretcher" parent="GuiControl" instance=ExtResource("10")]
 layout_mode = 0
 anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 0.0
-offset_top = 0.0
+offset_right = 1.0
 offset_bottom = 23.0
 
 [node name="PortraitBox" type="TextureRect" parent="GuiControl"]

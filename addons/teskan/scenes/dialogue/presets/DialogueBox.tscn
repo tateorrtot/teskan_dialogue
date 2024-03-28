@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ywmg5lieme5h"]
 
-[ext_resource type="Texture2D" uid="uid://blg1s10gqohsp" path="res://DefaultBackground.png" id="1_k1bl0"]
+[ext_resource type="Texture2D" uid="uid://blg1s10gqohsp" path="res://addons/teskan/sprites/default_background.png" id="1_ns5a6"]
 [ext_resource type="Texture2D" uid="uid://drur7owugjxt5" path="res://icon.svg" id="2_f3ick"]
 [ext_resource type="PackedScene" uid="uid://dei082u1wpmfv" path="res://addons/teskan/scenes/dialogue/presets/NameStretcher.tscn" id="3_tardp"]
 
@@ -22,7 +22,7 @@ anchor_top = 0.25
 anchor_bottom = 0.25
 offset_right = 1420.0
 offset_bottom = 300.0
-texture = ExtResource("1_k1bl0")
+texture = ExtResource("1_ns5a6")
 expand_mode = 1
 stretch_mode = 4
 
