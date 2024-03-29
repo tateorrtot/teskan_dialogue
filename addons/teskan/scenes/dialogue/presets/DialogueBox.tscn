@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://drur7owugjxt5" path="res://icon.svg" id="2_f3ick"]
 [ext_resource type="PackedScene" uid="uid://dei082u1wpmfv" path="res://addons/teskan/scenes/dialogue/presets/NameStretcher.tscn" id="3_tardp"]
 
-[node name="DialogueGUI" type="Control"]
+[node name="DialogueBox" type="Control"]
 layout_mode = 3
 anchor_left = 0.13
 anchor_top = 0.63
@@ -19,9 +19,10 @@ unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.25
-anchor_bottom = 0.25
-offset_right = 1420.0
-offset_bottom = 300.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.00012207
+offset_bottom = -6.10352e-05
 texture = ExtResource("1_ns5a6")
 expand_mode = 1
 stretch_mode = 4

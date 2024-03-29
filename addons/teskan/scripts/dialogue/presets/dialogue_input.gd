@@ -1,4 +1,5 @@
 extends Node
+class_name DialogueInput
 
 signal interact_button_pressed
 

@@ -242,7 +242,7 @@ offset_right = 855.0
 offset_bottom = 531.0
 text = "[rainbow freq=1 sat=10 val=20]Hi![/rainbow] This is the [color=#c9c8d9]default[/color] text with [b]BIG[/b] and [i]small[/i] text. Give it a [wave amp=50freq=2][color=#000000]TRY![/color][/wave] [i]this uses BBCode!)[/i]"
 
-[node name="DialogueGUI" parent="." instance=ExtResource("3_2hkyt")]
+[node name="DialogueBox" parent="." instance=ExtResource("3_2hkyt")]
 layout_mode = 1
 anchors_preset = 0
 anchor_left = 0.0

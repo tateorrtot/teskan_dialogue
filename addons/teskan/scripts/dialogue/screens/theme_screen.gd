@@ -3,14 +3,14 @@ extends Control
 
 @onready var tree : Tree = self.get_parent().get_parent().get_node("MainTree")
 
-@onready var dialogue_gui : Control = $DialogueGUI
-@onready var portrait_box : TextureRect = $DialogueGUI/PortraitBox 
-@onready var dialogue_background : TextureRect = $DialogueGUI/DialogueBackground
-@onready var name_stretcher : Label = $DialogueGUI/NameStretcher
-@onready var name_label : Label = $DialogueGUI/NameStretcher/NameLabel
-@onready var name_background : ColorRect = $DialogueGUI/NameStretcher/NameBackground
-@onready var text_accent : ColorRect = $DialogueGUI/TextAccent
-@onready var display_text : RichTextLabel = $DialogueGUI/TextAccent/DisplayText
+@onready var dialogue_gui : Control = $DialogueBox
+@onready var portrait_box : TextureRect = $DialogueBox/PortraitBox 
+@onready var dialogue_background : TextureRect = $DialogueBox/DialogueBackground
+@onready var name_stretcher : Label = $DialogueBox/NameStretcher
+@onready var name_label : Label = $DialogueBox/NameStretcher/NameLabel
+@onready var name_background : ColorRect = $DialogueBox/NameStretcher/NameBackground
+@onready var text_accent : ColorRect = $DialogueBox/TextAccent
+@onready var display_text : RichTextLabel = $DialogueBox/TextAccent/DisplayText
 
 var characters = []
 var character_path : String

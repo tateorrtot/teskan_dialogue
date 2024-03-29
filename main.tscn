@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://main.gd" id="1_3a5c2"]
 [ext_resource type="PackedScene" uid="uid://beausstv1wra7" path="res://addons/teskan/DialogueGUI.tscn" id="2_din3m"]
-[ext_resource type="Script" path="res://dialogue_input.gd" id="3_ov05i"]
+[ext_resource type="Script" path="res://addons/teskan/scripts/dialogue/presets/dialogue_input.gd" id="3_ov05i"]
 
 [node name="Node2D" type="Node2D" node_paths=PackedStringArray("gui")]
 script = ExtResource("1_3a5c2")
