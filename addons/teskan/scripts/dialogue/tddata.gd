@@ -21,7 +21,7 @@ static func new_character(tree : Tree):
 static func new_theme(tree : Tree):
 	var themes_holder = tree.get_root().get_child(1)
 	var timestamp = Time.get_ticks_usec()
-	var theme_dict = {'id' : 'null', 'name' : 'null', 'colour' : Color.WHITE, 'desc' : 'null', 'font' : 'null', 'small_font' : 12, 'medium_font' : 20, 'large_font' : 28, 'font_outline_size' : 1, 'kground' : 'null', 'name_background_colour' : Color.BLACK, 'text_accent_colour' : Color.BLACK,'font_outline_colour' : Color.BLACK}
+	var theme_dict = {'id' : 'null', 'name' : 'null', 'background' : 'res://addons/teskan/sprites/default_background.png', 'colour' : Color.WHITE, 'desc' : 'null', 'font' : 'res://addons/teskan/fonts/NotoSans-Regular.ttf', 'small_font' : 12, 'medium_font' : 20, 'large_font' : 28, 'font_outline_size' : 1, 'kground' : 'null', 'name_background_colour' : Color.BLACK, 'text_accent_colour' : Color.BLACK,'font_outline_colour' : Color.BLACK}
 	
 	theme_dict.id = timestamp
 	###print(1)

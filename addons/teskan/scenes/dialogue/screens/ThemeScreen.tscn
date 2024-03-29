@@ -70,7 +70,7 @@ text = "Background:"
 [node name="Background" type="Button" parent="ScrollContainer/Pickers/Background"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Select File"
+text = "res://addons/teskan/sprites/default_background.png"
 
 [node name="Font" type="HBoxContainer" parent="ScrollContainer/Pickers"]
 layout_mode = 2
@@ -83,7 +83,7 @@ text = "Font:"
 [node name="Font" type="Button" parent="ScrollContainer/Pickers/Font"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Select File"
+text = "res://addons/teskan/fonts/NotoSans-Regular.ttf"
 
 [node name="FontExplain" type="HBoxContainer" parent="ScrollContainer/Pickers"]
 layout_mode = 2
