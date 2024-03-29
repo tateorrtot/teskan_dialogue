@@ -1,14 +1,15 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://dgyb4gh0xnwnq"]
 
-[ext_resource path="res://addons/teskan/sprites/trash.png" type="Texture2D" id=1]
-[ext_resource path="res://addons/teskan/scripts/dialogue/presets/delete_event.gd" type="Script" id=2]
+[ext_resource type="Texture2D" uid="uid://00v4r61er60k" path="res://addons/teskan/sprites/trash.png" id="1"]
+[ext_resource type="Script" path="res://addons/teskan/scripts/dialogue/presets/delete_event.gd" id="2"]
 
 [node name="DeleteEvent" type="Button"]
-offset_left = 38.0
-offset_top = 32.0
-offset_right = 66.0
-offset_bottom = 56.0
-icon = ExtResource( 1 )
-script = ExtResource( 2 )
+anchors_preset = -1
+anchor_right = 0.012
+anchor_bottom = 0.022
+offset_right = 0.959999
+offset_bottom = 0.239998
+icon = ExtResource("1")
+script = ExtResource("2")
 
 [connection signal="pressed" from="." to="." method="_on_DeleteEvent_pressed"]

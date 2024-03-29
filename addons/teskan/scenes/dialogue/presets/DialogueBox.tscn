@@ -71,8 +71,7 @@ offset_top = -0.09375
 offset_right = 0.0549316
 offset_bottom = 0.250015
 bbcode_enabled = true
-text = "Hi! This is the default text with BIG and small text. Give it a TRY!
-(Line breaks also work, PS this uses BBCode!)"
+text = "To preview the outline use \"(outline_color=<hex_code>)(outline_size=5)Text...\" with square brackets."
 scroll_following = true
 
 [node name="NameStretcher" parent="." instance=ExtResource("3_tardp")]

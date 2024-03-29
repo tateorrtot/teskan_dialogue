@@ -1,12 +1,14 @@
 @tool
 extends Button
 
+@onready var my_event = get_node("../../") 
+
 @onready var timeline_screen = find_parent("TimelineScreen")#self.get_node("../../../../../")
 @onready var tree = self.find_parent("Dialogue").get_node("MainTree")
 @onready var events_list = timeline_screen.get_node("HSplitContainer/LeftSide/EventList")
 @onready var wait_after_drag = timeline_screen.get_node("WaitAfterDrag")
-@onready var event_divider = self.get_node("../EventDivider")
-@onready var main_body = self.get_node("../MainBody")
+@onready var event_divider = self.get_node("../../EventDivider")
+@onready var main_body = self.get_node("../../MainBody")
 
 var is_dragging = false
 var change_order = false
@@ -23,19 +25,24 @@ func _ready():
 		
 #START DRAGGING
 func _on_MoveEvent_button_down():
+	is_dragging = true
 	timeline_screen.is_dragging = true
 #DROP THE EVENT
 func _on_MoveEvent_button_up():
+	if not is_dragging:
+		return
+	is_dragging = false
+	
 	for event in events_list.get_children():
-		event.get_node("MoveEvent").move_event(self.get_parent())
+		event.find_child("MoveEvent").move_event(my_event)
 		#CHECK FOR SUB EVENTS
 		if event.has_node("ChildrenList"):
 			if event.get_node("ChildrenList").get_child_count() > 0:
 				move_sub_events(event)
 
 func move_sub_events(event):
-	for sub_event in event.get_node("ChildrenList").get_children():
-		sub_event.get_node("MoveEvent").move_event(self.get_parent())
+	for sub_event : Control in event.get_node("ChildrenList").get_children():
+		sub_event.find_child("MoveEvent").move_event(my_event)
 		if sub_event.has_node("ChildrenList"):
 			if sub_event.get_node("ChildrenList").get_child_count() > 0:
 				move_sub_events(sub_event)
@@ -62,9 +69,9 @@ func move_event(event):
 	#var timeline_path = "res://teskan_data/dialogue/timelines/"+tree.get_selected().get_metadata(0)
 	#var timeline_file = TDData.get_var("res://teskan_data/dialogue/timelines/"+tree.get_selected().get_metadata(0))
 	var original_index = event.get_index()
-	var target_index = self.get_parent().get_index()
+	var target_index = my_event.get_index()
 	#CHANGE ORDER NOT PARENT
-	if timeline_screen.is_dragging == true and change_order == true and self.get_parent().get_parent() == event.get_parent():
+	if timeline_screen.is_dragging == true and change_order == true and not force_change_event_parent and my_event.get_parent() == event.get_parent():
 		##print("CHANGE ORDER")
 		event.get_parent().move_child(event,target_index)
 		timeline_screen.is_dragging = false
@@ -78,12 +85,12 @@ func move_event(event):
 		#TDData.store_var("res://teskan_data/dialogue/timelines/"+tree.get_selected().get_metadata(0),timeline_file)
 		
 	#FORCE CHANGE PARENT 
-	if timeline_screen.is_dragging == true and force_change_event_parent == true and self.get_parent().has_node("ChildrenList"): #and self.get_parent().get_parent() == event.get_parent():
-		##print("Change Parent")
+	if timeline_screen.is_dragging == true and force_change_event_parent == true and my_event.has_node("ChildrenList"): #and self.get_parent().get_parent() == event.get_parent():
+		print("Change Parent")
 		#for parent in self.get_parent():
 		#TDData.get_event_parents(event)
 		#var current_event_path = TDData.get_event_path(event)
-		var new_parent_child_list = self.get_parent().get_node("ChildrenList")
+		var new_parent_child_list = my_event.get_node("ChildrenList")
 		event.get_parent().remove_child(event)
 		new_parent_child_list.add_child(event)
 		
@@ -93,12 +100,12 @@ func move_event(event):
 		#TDData.set_event_path(timeline_path,current_event_path,target_event_path,desired_index)
 
 	#CHANGE PARENT AND ORDER
-	elif timeline_screen.is_dragging == true and change_order == true and self.get_parent().get_parent() != event.get_parent():
+	elif timeline_screen.is_dragging == true and change_order == true and my_event.get_parent() != event.get_parent():
 		##print("Change parent AND order")
 		var new_parent_child_list
 		
-		if self.get_parent().get_parent().get_parent().has_node("ChildrenList"):
-			new_parent_child_list = self.get_parent().get_parent().get_parent().get_node("ChildrenList")
+		if my_event.get_parent().get_parent().has_node("ChildrenList"):
+			new_parent_child_list = my_event.get_parent().get_parent().get_node("ChildrenList")
 		else:
 			new_parent_child_list = events_list
 			

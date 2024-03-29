@@ -1,22 +1,27 @@
-[gd_scene format=2]
+[gd_scene format=3 uid="uid://cdchn7785x01w"]
 
 [node name="EventDivider" type="ColorRect"]
+custom_minimum_size = Vector2(0, 60)
+anchors_preset = -1
 anchor_right = 1.0
-offset_bottom = 30.0
-custom_minimum_size = Vector2( 0, 30 )
+anchor_bottom = 0.056
+offset_bottom = -30.48
+grow_horizontal = 2
 size_flags_horizontal = 3
-color = Color( 0.176471, 0.176471, 0.176471, 0.392157 )
+color = Color(0.392157, 0.392157, 0.392157, 0.392157)
 
 [node name="VisualDivider" type="ColorRect" parent="."]
 visible = false
+layout_mode = 0
 anchor_top = 0.4
 anchor_right = 1.0
 anchor_bottom = 0.533
 offset_top = 1.0
 offset_bottom = 1.0
-color = Color( 0.176471, 0.176471, 0.176471, 1 )
+color = Color(0.176471, 0.176471, 0.176471, 1)
 
 [node name="Id" type="Label" parent="."]
 visible = false
+layout_mode = 0
 offset_bottom = 14.0
 text = "12345"

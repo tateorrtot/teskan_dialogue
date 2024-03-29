@@ -112,6 +112,14 @@ func load_events_loop(timeline,parent,event_path):
 					
 			if event.text != 'null':
 				new_ui_event.get_node('%Text').text = event.text
+				new_ui_event.get_node('%Length').text = str(event.text.length())
+				if event.character_path != 'null':
+					var character_speed = TDData.get_var(event.character_path).voice_speed
+					var result : String = str(character_speed * 0.05 * event.text.length() + 0.1)
+					
+					new_ui_event.get_node('%Time').text = result
+					
+				
 			add_ui_event_child(new_ui_event,event_path,event_list,0)
 		
 		#choice events
@@ -238,9 +246,11 @@ func save_timeline():
 
 func save_events_loop(timeline,ui_parent,event_path):
 	#LOOP THROUGH ALL THE EVENTS IN THE SELECTED TIMELINE TO LOAD THEM
-	for ui_event in ui_parent:
+	for ui_event : Control in ui_parent:
 		#TEXT
-		if ui_event.get_node("Type").text == "Text":
+		var type = ui_event.find_child("Type").text
+		
+		if type == "Text":
 			var new_event = {'type' : 'text', 'character_path' : 'null', 'portrait' : 'null', 'text' : 'null', 'id' : get_event_id(ui_event), 'autocomplete' : false}
 			if ui_event.get_node('%CharacterName').text != '':
 				new_event.character_path = ui_event.character_path
@@ -255,7 +265,7 @@ func save_events_loop(timeline,ui_parent,event_path):
 			
 			add_event_child(new_event,event_path,timeline.events,0)
 		#CHOICE
-		if ui_event.get_node("Type").text == "Choice":
+		if type == "Choice":
 			###print("Choice found!")
 			var new_event = {'type' : 'choice', 'desc' : 'null', 'children' : [], 'id' : get_event_id(ui_event)}
 			new_event.desc = ui_event.get_node("%Description").text
@@ -266,7 +276,7 @@ func save_events_loop(timeline,ui_parent,event_path):
 			
 			check_for_children_while_saving(timeline,ui_event,event_path)
 		#OPTION
-		if ui_event.get_node("Type").text == "Option":
+		if type == "Option":
 			var new_event = {'type' : 'option', 'prompt' : 'null', 'children' : [], 'id' : get_event_id(ui_event)}
 			new_event.prompt = ui_event.get_node('%Prompt').text
 			
@@ -274,7 +284,7 @@ func save_events_loop(timeline,ui_parent,event_path):
 			
 			check_for_children_while_saving(timeline,ui_event,event_path)
 		#IF EVENT
-		if ui_event.get_node("Type").text == "IfEvent":
+		if type == "IfEvent":
 			var new_event = {'type' : 'if', 'parameter_1' : 'null', 'operator' : 'null', 'parameter_2' : 'null', 'children' : [], 'id' : get_event_id(ui_event)}
 			new_event.parameter_1 = ui_event.get_node('%Parameter1').text
 			new_event.operator = ui_event.get_node('%Operator').text
@@ -284,7 +294,7 @@ func save_events_loop(timeline,ui_parent,event_path):
 			check_for_children_while_saving(timeline,ui_event,event_path)
 
 		#EXIT
-		if ui_event.get_node("Type").text == "Exit":
+		if type == "Exit":
 			var new_event = {'type' : 'exit', 'id' : get_event_id(ui_event)}
 			
 			add_event_child(new_event,event_path,timeline.events,0)
@@ -292,7 +302,7 @@ func save_events_loop(timeline,ui_parent,event_path):
 			check_for_children_while_saving(timeline,ui_event,event_path)
 			
 		#SCRIPT
-		if ui_event.get_node("Type").text == "Script":
+		if type == "Script":
 			var new_event = {'type' : 'script', 'id' : get_event_id(ui_event), 'file_path' : 'null'}
 			
 			new_event.file_path = ui_event.get_node('%FilePath').text
@@ -301,7 +311,7 @@ func save_events_loop(timeline,ui_parent,event_path):
 			check_for_children_while_saving(timeline,ui_event,event_path)
 			
 		#ANIMATION
-		if ui_event.get_node("Type").text == "Animation":
+		if type == "Animation":
 			var new_event = {'type' : 'animation', 'id' : get_event_id(ui_event), 'node_path' : 'null', 'animation' : 'null', 'wait_until_done' : 'false'}
 			if ui_event.get_node('%NodePath').text != '':
 				new_event.node_path = ui_event.get_node('%NodePath').text
@@ -315,7 +325,7 @@ func save_events_loop(timeline,ui_parent,event_path):
 			check_for_children_while_saving(timeline,ui_event,event_path)
 			
 		#WAIT
-		if ui_event.get_node("Type").text == "Wait":
+		if type == "Wait":
 			var new_event = {'type' : 'wait', 'id' : get_event_id(ui_event), 'time' : "0"}
 			
 			new_event.time = ui_event.get_node('%Time').text
@@ -324,7 +334,7 @@ func save_events_loop(timeline,ui_parent,event_path):
 			check_for_children_while_saving(timeline,ui_event,event_path)
 
 		#SOUND
-		if ui_event.get_node("Type").text == "Sound":
+		if type == "Sound":
 			var new_event = {'type' : 'sound', 'id' : get_event_id(ui_event), 'node_path' : "null", 'file_path': "null", 'wait_until_done' : 'false'}
 			
 			if ui_event.get_node('%NodePath').text != '':
@@ -339,7 +349,7 @@ func save_events_loop(timeline,ui_parent,event_path):
 			check_for_children_while_saving(timeline,ui_event,event_path)
 			
 		#CHANGE SCENE
-		if ui_event.get_node("Type").text == "ChangeScene":
+		if type == "ChangeScene":
 			var new_event = {'type' : 'change_scene_to_file', 'id' : get_event_id(ui_event), 'scene' : "0"}
 			
 			new_event.scene = ui_event.get_node('%Scene').text

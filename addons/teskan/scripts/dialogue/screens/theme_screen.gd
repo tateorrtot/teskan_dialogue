@@ -84,10 +84,13 @@ func _on_TextPreview_text_changed(new_text):
 	update_text_preview(new_text)
 	
 func update_text_preview(new_text):
+	
 	if new_text != null:
-		display_text.text = ("[outline_color=#"+ (get_file().font_outline_colour.to_html())+"]"+"[outline_size="+var_to_str(get_file().font_outline_size)+"]"+new_text+"[/outline_size]"+"[/outline_color]")
+		display_text.text = new_text
+	#	display_text.text = ("[outline_color=#"+ (get_file().font_outline_colour.to_html())+"]"+"[outline_size="+var_to_str(get_file().font_outline_size)+"]"+new_text+"[/outline_size]"+"[/outline_color]")
 	else:
-		display_text.text = ("[outline_color=#"+ (get_file().font_outline_colour.to_html())+"]"+"[outline_size="+var_to_str(get_file().font_outline_size)+"]"+display_text.text+"[/outline_size]"+"[/outline_color]")
+		display_text.text = display_text.text
+	#	display_text.text = ("[outline_color=#"+ (get_file().font_outline_colour.to_html())+"]"+"[outline_size="+var_to_str(get_file().font_outline_size)+"]"+display_text.text+"[/outline_size]"+"[/outline_color]")
 
 func _on_BackgroundMenu_file_selected(path):
 	$"%Background".text = $BackgroundMenu.current_path
